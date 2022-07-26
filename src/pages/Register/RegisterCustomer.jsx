@@ -8,7 +8,6 @@ import {
     Box,
 } from '@mui/material';
 import React, { useState } from 'react';
-import Navbar from '../../components/NavBar';
 import LocalLocations from '../../resources/LocalLocations';
 import Footer from '../../components/Footer';
 
@@ -80,7 +79,6 @@ export default function RegisterCustomer() {
 
     return (
         <Box sx={{ flexGrow: 1, bgcolor: 'lightcyan' }}>
-            <Navbar />
             <Container maxWidth="sm">
                 <Box
                     sx={{ flexGrow: 1, bgcolor: '#fff' }}

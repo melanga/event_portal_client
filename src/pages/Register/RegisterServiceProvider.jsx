@@ -8,7 +8,6 @@ import {
     TextField,
 } from '@mui/material';
 import React, { useState } from 'react';
-import NavBar from '../../components/NavBar';
 import LocalLocations from '../../resources/LocalLocations';
 import Footer from '../../components/Footer';
 
@@ -81,7 +80,6 @@ export default function RegisterServiceProvider() {
 
     return (
         <Box sx={{ flexGrow: 1, bgcolor: 'lightcyan' }}>
-            <NavBar />
             <Container maxWidth="sm">
                 <Box
                     sx={{ flexGrow: 1, bgcolor: '#fff' }}

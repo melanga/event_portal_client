@@ -1,6 +1,6 @@
 import { Stack, Typography, Button, TextField, Box } from '@mui/material';
+import axios from 'axios';
 import React, { useState } from 'react';
-import Navbar from '../components/NavBar';
 
 export default function Login() {
     const [username, setUsername] = useState('');
@@ -21,6 +21,19 @@ export default function Login() {
         }
         if (username && password) {
             console.log(username, password);
+            axios
+                .post('http://localhost:3000/api/v1/users/login', {
+                    email: username,
+                    password: password,
+                })
+                .then((res) => {
+                    console.log(res.data.token);
+                    localStorage.setItem('token', res.data.token);
+                    localStorage.setItem('user', JSON.stringify(res.data.data));
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
         }
     };
 
@@ -32,9 +45,8 @@ export default function Login() {
 
     return (
         <Box sx={{ bgcolor: 'lightcyan', minHeight: '100vh' }}>
-            <Navbar />
             <Stack
-                mt={15}
+                pt={10}
                 spacing={2}
                 justifyContent="center"
                 alignItems="center"
