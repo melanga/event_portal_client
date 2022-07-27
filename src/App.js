@@ -4,9 +4,9 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import RegisterCustomer from './pages/Register/RegisterCustomer';
 import RegisterServiceProvider from './pages/Register/RegisterServiceProvider';
-import Navbar from './components/NavBar';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import DrawerAppBar from './components/AppBarDrawer';
 
 function App() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -36,20 +36,26 @@ function App() {
     useEffect(() => {
         checkAuthenticated().then((r) => {});
     }, []);
+
     return (
         <>
             <Router>
-                <Navbar />
+                <DrawerAppBar />
                 <div className="container">
                     <Routes>
-                        <Route path="/" element={<LandingPage />} />
-                        <Route path="/login" element={<Login />} />
-                        <Route path="/register" element={<Register />} />
                         <Route
+                            path="/"
+                            element={<LandingPage isAuthenticated />}
+                        />
+                        <Route exact path="/login" element={<Login />} />
+                        <Route exact path="/register" element={<Register />} />
+                        <Route
+                            exact
                             path="/register/customer"
                             element={<RegisterCustomer />}
                         />
                         <Route
+                            exact
                             path="/register/service_provider"
                             element={<RegisterServiceProvider />}
                         />

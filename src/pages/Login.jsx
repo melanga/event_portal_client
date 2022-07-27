@@ -1,6 +1,7 @@
 import { Stack, Typography, Button, TextField, Box } from '@mui/material';
 import axios from 'axios';
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 export default function Login() {
     const [username, setUsername] = useState('');
@@ -90,7 +91,9 @@ export default function Login() {
 
                 <Box mt={2.5}>
                     New Here?
-                    <Button href="/register">Register!</Button>
+                    <Button component={Link} to="/register">
+                        Register!
+                    </Button>
                 </Box>
             </Stack>
         </Box>

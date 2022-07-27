@@ -52,7 +52,7 @@ const Navbar = () => {
                 </Box>
                 <Fullscreen>
                     <Box>
-                        <Button sx={{ color: '#fff' }}>
+                        <Button component={Link} to="/" sx={{ color: '#fff' }}>
                             <Typography>Home</Typography>
                         </Button>
                         <Button sx={{ color: '#fff' }}>
@@ -66,7 +66,8 @@ const Navbar = () => {
                         </Button>
 
                         <Button
-                            href={'/login'}
+                            component={Link}
+                            to="/login"
                             sx={{ color: '#fff', borderRadius: '50px' }}
                             variant="contained"
                             ml={1}
@@ -124,7 +125,8 @@ const Navbar = () => {
                                 </Button>
 
                                 <Button
-                                    href={'/login'}
+                                    component={Link}
+                                    to="/login"
                                     sx={{ color: '#fff' }}
                                     variant="contained"
                                     ml={1}

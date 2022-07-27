@@ -2,7 +2,7 @@ import { Stack, Typography, Button, Box } from '@mui/material';
 import React from 'react';
 import SearchSharpIcon from '@mui/icons-material/SearchSharp';
 import SettingsSharpIcon from '@mui/icons-material/SettingsSharp';
-//import { Box } from '@mui/system';
+import { Link } from 'react-router-dom';
 
 const Register = () => {
     return (
@@ -12,7 +12,8 @@ const Register = () => {
                     SIGN IN
                 </Typography>
                 <Button
-                    href={'/register/customer'}
+                    component={Link}
+                    to={'/register/customer'}
                     size="large"
                     variant="contained"
                     endIcon={<SearchSharpIcon />}
@@ -21,7 +22,8 @@ const Register = () => {
                     I am Searching a Service
                 </Button>
                 <Button
-                    href={'/register/service_provider'}
+                    component={Link}
+                    to={'/register/service_provider'}
                     size="large"
                     variant="contained"
                     endIcon={<SettingsSharpIcon />}
@@ -31,7 +33,9 @@ const Register = () => {
                 </Button>
                 <Typography>
                     Already Registered?
-                    <Button href="#text-buttons">Log in</Button>
+                    <Button component={Link} to={'/login'}>
+                        Log in
+                    </Button>
                 </Typography>
             </Stack>
         </Box>
