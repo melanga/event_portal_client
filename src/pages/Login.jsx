@@ -1,7 +1,7 @@
 import { Stack, Typography, Button, TextField, Box } from '@mui/material';
-import axios from 'axios';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { login } from '../api/auth';
 
 export default function Login() {
     const [username, setUsername] = useState('');
@@ -9,7 +9,7 @@ export default function Login() {
     const [usernameError, setUsernameError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setUsernameError(false);
         setPasswordError(false);
@@ -22,19 +22,8 @@ export default function Login() {
         }
         if (username && password) {
             console.log(username, password);
-            axios
-                .post('http://localhost:3000/api/v1/users/login', {
-                    email: username,
-                    password: password,
-                })
-                .then((res) => {
-                    console.log(res.data.token);
-                    localStorage.setItem('token', res.data.token);
-                    localStorage.setItem('user', JSON.stringify(res.data.data));
-                })
-                .catch((err) => {
-                    console.log(err);
-                });
+            const response = await login(username, password);
+            console.log(response);
         }
     };
 
