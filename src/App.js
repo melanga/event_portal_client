@@ -1,12 +1,13 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LandingPage from './pages/LandingPage';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import RegisterCustomer from './pages/Register/RegisterCustomer';
-import RegisterServiceProvider from './pages/Register/RegisterServiceProvider';
+import Login from './pages/auth/Login';
+import Register from './pages/auth/Register';
+import RegisterCustomer from './pages/auth/Register/RegisterCustomer';
+import RegisterServiceProvider from './pages/auth/Register/RegisterServiceProvider';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import DrawerAppBar from './components/AppBarDrawer';
+import { Layout } from './components/Layout';
 
 function App() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -43,22 +44,31 @@ function App() {
                 <DrawerAppBar />
                 <div className="container">
                     <Routes>
-                        <Route
-                            path="/"
-                            element={<LandingPage isAuthenticated />}
-                        />
-                        <Route exact path="/login" element={<Login />} />
-                        <Route exact path="/register" element={<Register />} />
-                        <Route
-                            exact
-                            path="/register/customer"
-                            element={<RegisterCustomer />}
-                        />
-                        <Route
-                            exact
-                            path="/register/service_provider"
-                            element={<RegisterServiceProvider />}
-                        />
+                        <Route path="/" element={<Layout />}>
+                            <Route
+                                path="/"
+                                element={<LandingPage isAuthenticated />}
+                            />
+
+                            <Route exact path="login" element={<Login />} />
+                            <Route
+                                exact
+                                path="register"
+                                element={<Register />}
+                            />
+                            <Route path="register" element={<Layout />}>
+                                <Route
+                                    exact
+                                    path="customer"
+                                    element={<RegisterCustomer />}
+                                />
+                                <Route
+                                    exact
+                                    path="service_provider"
+                                    element={<RegisterServiceProvider />}
+                                />
+                            </Route>
+                        </Route>
                     </Routes>
                 </div>
             </Router>

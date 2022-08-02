@@ -1,7 +1,7 @@
 import { Autocomplete, TextField } from '@mui/material';
 import React from 'react';
 
-const LocalLocations = () => {
+const LocalLocations = ({ handleChange }) => {
     const defaultProps = {
         options: districts,
         getOptionLabel: (option) => option.title,
@@ -10,14 +10,17 @@ const LocalLocations = () => {
     return (
         <Autocomplete
             {...defaultProps}
-            id="locationSearch"
+            id="location"
             clearOnEscape
-            margin="dense"
+            onChange={handleChange}
             renderInput={(params) => (
                 <TextField
                     {...params}
+                    name={'location'}
                     label="Your District"
-                    variant="standard"
+                    margin={'dense'}
+                    variant="outlined"
+                    onChange={handleChange}
                 />
             )}
         />

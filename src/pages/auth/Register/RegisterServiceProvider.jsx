@@ -8,73 +8,74 @@ import {
     TextField,
 } from '@mui/material';
 import React, { useState } from 'react';
-import LocalLocations from '../../resources/LocalLocations';
-import Footer from '../../components/Footer';
+import LocalLocations from '../../../resources/LocalLocations';
+import Footer from '../../../components/Footer';
 
+const form_initial = {
+    service_title: '',
+    description: '',
+    category: '',
+    first_name: '',
+    last_name: '',
+    email: '',
+    telephone_number: '',
+    location: '',
+    password: '',
+    c_password: '',
+};
+const form_initial_errors = {
+    service_title: false,
+    description: false,
+    category: false,
+    first_name: false,
+    last_name: false,
+    email: false,
+    telephone_number: false,
+    location: false,
+    password: false,
+    c_password: false,
+    passwordMatch: false,
+};
 export default function RegisterServiceProvider() {
-    const [companyName, setCompanyName] = useState('');
-    const [companyDescription, setCompanyDescription] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
-    const [email, setEmail] = useState('');
-    const [phone, setPhone] = useState('');
+    const [form, setForm] = useState(form_initial);
+    const [formErrors, setFormErrors] = useState(form_initial_errors);
+    const handleChange = (e) => {
+        setForm({ ...form, [e.target.name]: e.target.value });
+    };
 
-    const [companyNameError, setCompanyNameError] = useState(false);
-    const [companyDescriptionError, setCompanyDescriptionError] =
-        useState(false);
-    const [passwordError, setPasswordError] = useState(false);
-    const [confirmPasswordError, setConfirmPasswordError] = useState(false);
-    const [emailError, setEmailError] = useState(false);
-    const [phoneError, setPhoneError] = useState(false);
+    function handleErrors() {
+        Object.keys(formErrors).forEach((key) => {
+            // setFormErrors({...formErrors, [key]: form[key] === ''}); not working
+            setFormErrors((formErrors) => ({
+                ...formErrors,
+                [key]: form[key] === '',
+            }));
+            if (key === 'passwordMatch') {
+                setFormErrors((formErrors) => ({
+                    ...formErrors,
+                    [key]: form.password !== form.c_password,
+                }));
+            }
+        });
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
-        setCompanyDescriptionError(false);
-        setCompanyNameError(false);
-        setPasswordError(false);
-        setConfirmPasswordError(false);
-        setEmailError(false);
-        setPhoneError(false);
-
+        // TODO: set all formErrors to false
+        // set all formErrors object values to false
+        Object.keys(formErrors).forEach((key) => {
+            setFormErrors((formErrors) => ({
+                ...formErrors,
+                [key]: false,
+            }));
+        });
+        handleErrors();
+        console.log(form);
         if (
-            companyName &&
-            companyDescription &&
-            password &&
-            confirmPassword &&
-            email &&
-            password === confirmPassword
+            !Object.values(form).some((value) => value === '') &&
+            form.password === form.c_password
         ) {
-            console.log(
-                companyName,
-                companyDescription,
-                email,
-                password,
-                confirmPassword,
-                phone
-            );
-        }
-        if (companyName === '') {
-            setCompanyNameError(true);
-        }
-        if (companyDescription === '') {
-            setCompanyDescriptionError(true);
-        }
-        if (password === '') {
-            setPasswordError(true);
-        }
-        if (confirmPassword === '') {
-            setConfirmPasswordError(true);
-        }
-        if (email === '') {
-            setEmailError(true);
-        }
-        if (phone === '') {
-            setPhoneError(true);
-        }
-        if (password !== confirmPassword) {
-            setConfirmPasswordError(true);
-            alert('Password does not match');
+            console.log('submitted');
         }
     };
 
@@ -96,70 +97,103 @@ export default function RegisterServiceProvider() {
 
                     <form noValidate autoComplete="off" onSubmit={handleSubmit}>
                         <TextField
-                            onChange={(e) => setCompanyName(e.target.value)}
+                            onChange={handleChange}
+                            name={'first_name'}
                             fullWidth
-                            label="Company Name"
+                            label="First Name"
                             variant="outlined"
-                            error={companyNameError}
+                            error={formErrors.first_name}
                             margin="dense"
                             required
                         />
                         <TextField
-                            onChange={(e) =>
-                                setCompanyDescription(e.target.value)
-                            }
+                            onChange={handleChange}
+                            name={'last_name'}
                             fullWidth
+                            label="Last Name"
+                            variant="outlined"
+                            error={formErrors.last_name}
+                            margin="dense"
+                            required
+                        />
+                        <TextField
+                            onChange={handleChange}
+                            name={'service_title'}
+                            fullWidth
+                            label="Service Title"
+                            variant="outlined"
+                            error={formErrors.service_title}
+                            margin="dense"
+                            required
+                        />
+                        <TextField
+                            onChange={handleChange}
+                            fullWidth
+                            name={'description'}
                             label="Company Description"
                             variant="outlined"
                             multiline
                             rows={4}
-                            error={companyDescriptionError}
+                            error={formErrors.description}
                             margin="dense"
                             required
                         />
                         <TextField
-                            onChange={(e) => setEmail(e.target.value)}
+                            onChange={handleChange}
                             fullWidth
-                            id="email"
+                            name={'email'}
                             label="e-mail"
                             variant="outlined"
                             margin="dense"
                             autoComplete="email"
                             required
-                            error={emailError}
+                            error={formErrors.email}
                         />
                         <TextField
-                            onChange={(e) => setPassword(e.target.value)}
+                            onChange={handleChange}
                             fullWidth
+                            name={'password'}
                             type="password"
                             placeholder="password"
                             label="Enter a password"
                             margin="dense"
-                            error={passwordError}
+                            error={formErrors.password}
                             required
                         />
                         <TextField
-                            onChange={(e) => setConfirmPassword(e.target.value)}
+                            onChange={handleChange}
                             fullWidth
+                            name={'c_password'}
                             type="password"
                             placeholder="password"
                             label="Re-enter password"
                             margin="dense"
-                            error={confirmPasswordError}
+                            error={formErrors.passwordMatch}
                             required
                         />
                         <TextField
-                            onChange={(e) => setPhone(e.target.value)}
+                            onChange={handleChange}
                             fullWidth
-                            id="contactNumber"
+                            name={'telephone_number'}
                             label="Contact Number"
                             variant="outlined"
                             margin="dense"
-                            error={phoneError}
+                            error={formErrors.telephone_number}
                             required
                             mb={2}
                         />
-                        <LocalLocations />
+                        <TextField
+                            onChange={handleChange}
+                            fullWidth
+                            name={'category'}
+                            label="Category"
+                            variant="outlined"
+                            margin="dense"
+                            error={formErrors.category}
+                            required
+                            mb={2}
+                        />
+                        <LocalLocations handleChange={handleChange} />
                         <Stack
                             mt={4}
                             justifyContent="space-between"

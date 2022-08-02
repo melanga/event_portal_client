@@ -1,29 +1,29 @@
-import { Stack, Typography, Button, TextField, Box } from '@mui/material';
+import { Stack, Typography, Button, Box } from '@mui/material';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { login } from '../api/auth';
+import { login } from '../../api/auth';
+import Input from './Input';
 
 export default function Login() {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [usernameError, setUsernameError] = useState(false);
-    const [passwordError, setPasswordError] = useState(false);
-
+    const [form, setForm] = useState({ username: '', password: '' });
+    const [formErrors, setFormErrors] = useState({
+        usernameError: false,
+        passwordError: false,
+    });
+    const handleChange = (e) => {
+        setForm({ ...form, [e.target.name]: e.target.value });
+    };
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setUsernameError(false);
-        setPasswordError(false);
-
-        if (username === '') {
-            setUsernameError(true);
-        }
-        if (password === '') {
-            setPasswordError(true);
-        }
-        if (username && password) {
-            console.log(username, password);
-            const response = await login(username, password);
-            console.log(response);
+        setFormErrors({
+            usernameError: form.username === '',
+            passwordError: form.password === '',
+        });
+        if (form.username && form.password) {
+            login(form.username, form.password).then((res) => {
+                console.log(res);
+            });
+            console.log(form);
         }
     };
 
@@ -44,30 +44,29 @@ export default function Login() {
                 <Typography variant="h6">LOG IN</Typography>
                 <br />
                 <br />
-
                 <form
                     noValidate
                     autoComplete="off"
                     onSubmit={handleSubmit}
                     style={flexContainer}
                 >
-                    <TextField
-                        onChange={(e) => setUsername(e.target.value)}
+                    <Input
+                        handleChange={handleChange}
+                        name="username"
                         label="Username"
-                        variant="outlined"
-                        error={usernameError}
+                        type={'text'}
+                        error={formErrors.usernameError}
+                        helperText={formErrors.usernameError ? 'Required' : ''}
                     />
-
-                    <TextField
-                        onChange={(e) => setPassword(e.target.value)}
+                    <Input
+                        handleChange={handleChange}
+                        name="password"
                         label="Password"
-                        type="password"
-                        variant="outlined"
-                        error={passwordError}
+                        type={'password'}
+                        error={formErrors.passwordError}
+                        helperText={formErrors.passwordError ? 'Required' : ''}
                     />
                     <br />
-                    <br />
-
                     <Button
                         type="submit"
                         size="large"
