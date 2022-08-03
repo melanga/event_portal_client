@@ -2,7 +2,6 @@ import {
     Button,
     Container,
     Divider,
-    Stack,
     Typography,
     Box,
     TextField,
@@ -10,11 +9,9 @@ import {
 import React, { useEffect, useRef, useState } from 'react';
 import LocalLocations from '../../../resources/LocalLocations';
 import Footer from '../../../components/Footer';
+import { Link } from 'react-router-dom';
 
-const form_initial = {
-    service_title: '',
-    description: '',
-    category: '',
+const form_initial_c = {
     first_name: '',
     last_name: '',
     email: '',
@@ -23,10 +20,13 @@ const form_initial = {
     password: '',
     c_password: '',
 };
-const form_initial_errors = {
-    service_title: false,
-    description: false,
-    category: false,
+const form_initial_sp = {
+    ...form_initial_c,
+    service_title: '',
+    description: '',
+    category: '',
+};
+const form_initial_errors_c = {
     first_name: false,
     last_name: false,
     email: false,
@@ -36,9 +36,20 @@ const form_initial_errors = {
     c_password: false,
     passwordMatch: false,
 };
-export default function RegisterServiceProvider() {
-    const [form, setForm] = useState(form_initial);
-    const [formErrors, setFormErrors] = useState(form_initial_errors);
+const form_initial_errors_sp = {
+    ...form_initial_errors_c,
+    service_title: false,
+    description: false,
+    category: false,
+};
+
+export default function RegisterPage({ isCustomer }) {
+    const [form, setForm] = useState(
+        isCustomer ? form_initial_c : form_initial_sp
+    );
+    const [formErrors, setFormErrors] = useState(
+        isCustomer ? form_initial_errors_c : form_initial_errors_sp
+    );
     const isMounted = useRef(false);
 
     const handleChange = (e) => {
@@ -85,21 +96,28 @@ export default function RegisterServiceProvider() {
     }, [handleErrors]);
 
     return (
-        <Box sx={{ flexGrow: 1, bgcolor: 'lightcyan' }}>
-            <Container maxWidth="sm">
+        <Box
+            display={'flex-column'}
+            alignItems={'center'}
+            sx={{ bgcolor: 'lightcyan' }}
+        >
+            <Container maxWidth="sm" sx={{ paddingY: '16px' }}>
                 <Box
-                    sx={{ flexGrow: 1, bgcolor: '#fff' }}
+                    boxShadow={2}
+                    maxWidth={'sm'}
+                    display={'flex-column'}
+                    sx={{ bgcolor: '#fff', borderRadius: '10px' }}
                     p={5}
                     justifyContent="center"
+                    alignItems="center"
                 >
-                    <Typography variant="h5" margin="20px">
+                    <Typography align={'center'} variant="h4">
                         Sign In
                     </Typography>
-                    <Typography variant="body2" margin="15px">
-                        as a Service Provider
+                    <Typography align={'center'} variant="body2">
+                        as a {isCustomer ? 'Customer' : 'Service Provider'}
                     </Typography>
-                    <Divider variant="middle" />
-
+                    <Divider variant="middle" sx={{ marginY: '8px' }} />
                     <form noValidate autoComplete="off" onSubmit={handleSubmit}>
                         <TextField
                             onChange={handleChange}
@@ -121,28 +139,32 @@ export default function RegisterServiceProvider() {
                             margin="dense"
                             required
                         />
-                        <TextField
-                            onChange={handleChange}
-                            name={'service_title'}
-                            fullWidth
-                            label="Service Title"
-                            variant="outlined"
-                            error={formErrors.service_title}
-                            margin="dense"
-                            required
-                        />
-                        <TextField
-                            onChange={handleChange}
-                            fullWidth
-                            name={'description'}
-                            label="Company Description"
-                            variant="outlined"
-                            multiline
-                            rows={4}
-                            error={formErrors.description}
-                            margin="dense"
-                            required
-                        />
+                        {!isCustomer && (
+                            <TextField
+                                onChange={handleChange}
+                                name={'service_title'}
+                                fullWidth
+                                label="Service Title"
+                                variant="outlined"
+                                error={formErrors.service_title}
+                                margin="dense"
+                                required
+                            />
+                        )}
+                        {!isCustomer && (
+                            <TextField
+                                onChange={handleChange}
+                                fullWidth
+                                name={'description'}
+                                label="Company Description"
+                                variant="outlined"
+                                multiline
+                                rows={4}
+                                error={formErrors.description}
+                                margin="dense"
+                                required
+                            />
+                        )}
                         <TextField
                             onChange={handleChange}
                             fullWidth
@@ -188,52 +210,46 @@ export default function RegisterServiceProvider() {
                             required
                             mb={2}
                         />
-                        <TextField
-                            onChange={handleChange}
-                            fullWidth
-                            name={'category'}
-                            label="Category"
-                            variant="outlined"
-                            margin="dense"
-                            error={formErrors.category}
-                            required
-                            mb={2}
-                        />
-                        <LocalLocations handleChange={handleChange} />
-                        <Stack
-                            mt={4}
-                            justifyContent="space-between"
-                            spacing={2}
-                        >
-                            <Button
+                        {!isCustomer && (
+                            <TextField
+                                onChange={handleChange}
+                                fullWidth
+                                name={'category'}
+                                label="Category"
                                 variant="outlined"
-                                sx={{
-                                    p: 1,
-                                    borderRadius: '50px',
-                                }}
-                            >
-                                Clear all
-                            </Button>
-                            <Button
-                                variant="contained"
-                                type="submit"
-                                sx={{
-                                    p: 2,
-                                    borderRadius: '50px',
-                                }}
-                            >
-                                Submit
-                            </Button>
-                            <Button
-                                href={'/login'}
-                                variant="text"
-                                sx={{ p: 2, borderRadius: '50px' }}
-                            >
-                                <Typography variant="body1">
-                                    Already have an account?
-                                </Typography>
-                            </Button>
-                        </Stack>
+                                margin="dense"
+                                error={formErrors.category}
+                                required
+                                mb={2}
+                            />
+                        )}
+                        <LocalLocations handleChange={handleChange} />
+                        <Button
+                            fullWidth={true}
+                            variant="contained"
+                            type="submit"
+                            sx={{
+                                mt: '16px',
+                                p: 2,
+                                borderRadius: '50px',
+                            }}
+                        >
+                            Submit
+                        </Button>
+                        <Button
+                            fullWidth={true}
+                            component={Link}
+                            to={'/login'}
+                            variant="text"
+                            sx={{
+                                p: 2,
+                                borderRadius: '50px',
+                            }}
+                        >
+                            <Typography variant="body1">
+                                Already have an account?
+                            </Typography>
+                        </Button>
                     </form>
                 </Box>
             </Container>

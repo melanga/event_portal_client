@@ -2,12 +2,11 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LandingPage from './pages/LandingPage';
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
-import RegisterCustomer from './pages/auth/Register/RegisterCustomer';
-import RegisterServiceProvider from './pages/auth/Register/RegisterServiceProvider';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import DrawerAppBar from './components/AppBarDrawer';
 import { Layout } from './components/Layout';
+import RegisterPage from './pages/auth/Register/RegisterPage';
 
 function App() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -49,7 +48,6 @@ function App() {
                                 path="/"
                                 element={<LandingPage isAuthenticated />}
                             />
-
                             <Route exact path="login" element={<Login />} />
                             <Route
                                 exact
@@ -60,12 +58,14 @@ function App() {
                                 <Route
                                     exact
                                     path="customer"
-                                    element={<RegisterCustomer />}
+                                    element={<RegisterPage isCustomer={true} />}
                                 />
                                 <Route
                                     exact
                                     path="service_provider"
-                                    element={<RegisterServiceProvider />}
+                                    element={
+                                        <RegisterPage isCustomer={false} />
+                                    }
                                 />
                             </Route>
                         </Route>
