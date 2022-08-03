@@ -7,7 +7,7 @@ import {
     Box,
     TextField,
 } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import LocalLocations from '../../../resources/LocalLocations';
 import Footer from '../../../components/Footer';
 
@@ -39,11 +39,14 @@ const form_initial_errors = {
 export default function RegisterServiceProvider() {
     const [form, setForm] = useState(form_initial);
     const [formErrors, setFormErrors] = useState(form_initial_errors);
+    const isMounted = useRef(false);
+
     const handleChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value });
     };
 
-    function handleErrors() {
+    // eslint-disable-next-line
+    const handleErrors = () => {
         Object.keys(formErrors).forEach((key) => {
             // setFormErrors({...formErrors, [key]: form[key] === ''}); not working
             setFormErrors((formErrors) => ({
@@ -57,27 +60,29 @@ export default function RegisterServiceProvider() {
                 }));
             }
         });
-    }
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // TODO: set all formErrors to false
-        // set all formErrors object values to false
-        Object.keys(formErrors).forEach((key) => {
-            setFormErrors((formErrors) => ({
-                ...formErrors,
-                [key]: false,
-            }));
-        });
+
         handleErrors();
-        console.log(form);
         if (
             !Object.values(form).some((value) => value === '') &&
             form.password === form.c_password
         ) {
             console.log('submitted');
+            console.log(form);
         }
+        isMounted.current = true;
     };
+
+    useEffect(() => {
+        if (isMounted.current) {
+            console.log('mounted');
+            handleErrors();
+            isMounted.current = false;
+        }
+    }, [handleErrors]);
 
     return (
         <Box sx={{ flexGrow: 1, bgcolor: 'lightcyan' }}>
@@ -142,6 +147,7 @@ export default function RegisterServiceProvider() {
                             onChange={handleChange}
                             fullWidth
                             name={'email'}
+                            id="email"
                             label="e-mail"
                             variant="outlined"
                             margin="dense"
