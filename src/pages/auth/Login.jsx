@@ -1,8 +1,9 @@
 import { Stack, Typography, Button, Box } from '@mui/material';
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { login } from '../../api/auth';
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import Input from './Input';
+import { useDispatch, useSelector } from 'react-redux';
+import { login } from '../../api/auth/authSlice';
 
 export default function Login() {
     const [form, setForm] = useState({ username: '', password: '' });
@@ -10,6 +11,14 @@ export default function Login() {
         usernameError: false,
         passwordError: false,
     });
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const { user, isSuccess } = useSelector((state) => state.auth);
+    useEffect(() => {
+        if (isSuccess && user) {
+            navigate('/');
+        }
+    }, [user, isSuccess, navigate]);
     const handleChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value });
     };
@@ -20,10 +29,7 @@ export default function Login() {
             passwordError: form.password === '',
         });
         if (form.username && form.password) {
-            login(form.username, form.password).then((res) => {
-                console.log(res);
-            });
-            console.log(form);
+            dispatch(login(form));
         }
     };
 

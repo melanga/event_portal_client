@@ -1,146 +1,142 @@
-import {
-    AppBar,
-    Box,
-    Toolbar,
-    styled,
-    Typography,
-    Button,
-    Accordion,
-    AccordionDetails,
-    AccordionSummary,
-    ButtonGroup,
-} from '@mui/material';
-import React from 'react';
-import PersonIcon from '@mui/icons-material/Person';
-import logo from '../images/logo.png';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { cyan } from '@mui/material/colors';
+import * as React from 'react';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Divider from '@mui/material/Divider';
+import Drawer from '@mui/material/Drawer';
+import IconButton from '@mui/material/IconButton';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemText from '@mui/material/ListItemText';
+import MenuIcon from '@mui/icons-material/Menu';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
+import logo from '../images/logo.png';
+import PersonIcon from '@mui/icons-material/Person';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../api/auth/authSlice';
 
-const StyledToolbar = styled(Toolbar)({
-    display: 'flex',
-    justifyContent: 'space-between',
-    backgroundColor: '#222831',
-});
+const drawerWidth = 240;
+const navItems = ['Home', 'Services', 'About', 'Contact'];
 
-const Fullscreen = styled(Box)(({ theme }) => ({
-    display: 'none',
-    alignItems: 'center',
-    gap: '20px',
-    [theme.breakpoints.up('md')]: {
-        display: 'flex',
-    },
-}));
+function NavBar(props) {
+    const { window } = props;
+    const [mobileOpen, setMobileOpen] = React.useState(false);
 
-const Mobilescreen = styled(Box)(({ theme }) => ({
-    display: 'flex',
-    alignItems: 'center',
-    gap: '20px',
-    [theme.breakpoints.up('md')]: {
-        display: 'none',
-    },
-}));
+    const handleDrawerToggle = () => {
+        setMobileOpen(!mobileOpen);
+    };
+    const { user } = useSelector((state) => state.auth);
+    const dispatch = useDispatch();
 
-const Navbar = () => {
+    const drawer = (
+        <Box
+            onClick={handleDrawerToggle}
+            sx={{ textAlign: 'center', backgroundColor: '#222831' }}
+        >
+            <Typography variant="h6" sx={{ my: 2 }}>
+                Menu
+            </Typography>
+            <Divider color={'white'} />
+            <List>
+                {navItems.map((item) => (
+                    <ListItem key={item} disablePadding>
+                        <ListItemButton sx={{ textAlign: 'center' }}>
+                            <ListItemText primary={item} />
+                        </ListItemButton>
+                    </ListItem>
+                ))}
+            </List>
+        </Box>
+    );
+
+    const container =
+        window !== undefined ? () => window().document.body : undefined;
+
     return (
-        <AppBar position="sticky">
-            <StyledToolbar>
-                <Box padding="20px">
-                    <Link to="/" style={{ textDecoration: 'none' }}>
-                        <img src={logo} alt="Logo" height="50px" />
-                    </Link>
-                </Box>
-                <Fullscreen>
-                    <Box>
-                        <Button component={Link} to="/" sx={{ color: '#fff' }}>
-                            <Typography>Home</Typography>
-                        </Button>
-                        <Button sx={{ color: '#fff' }}>
-                            <Typography>Events</Typography>
-                        </Button>
-                        <Button sx={{ color: '#fff' }}>
-                            <Typography>Services</Typography>
-                        </Button>
-                        <Button sx={{ color: '#fff' }}>
-                            <Typography>About Us</Typography>
-                        </Button>
-
-                        <Button
-                            component={Link}
-                            to="/login"
-                            sx={{ color: '#fff', borderRadius: '50px' }}
-                            variant="contained"
-                            ml={1}
-                            startIcon={<PersonIcon />}
-                        >
-                            Log In
-                        </Button>
-                    </Box>
-                </Fullscreen>
-                <Mobilescreen>
-                    <Accordion
+        <Box sx={{ display: 'flex' }}>
+            <AppBar component="nav" position={'sticky'}>
+                <Toolbar sx={{ backgroundColor: '#222831' }}>
+                    <Box
+                        padding="20px"
                         sx={{
-                            backgroundColor: '#222831',
-                            color: 'white',
+                            flexGrow: 1,
                         }}
                     >
-                        <AccordionSummary
-                            expandIcon={
-                                <ExpandMoreIcon sx={{ color: cyan[500] }} />
-                            }
-                            aria-controls="panel1a-content"
-                            id="panel1a-header"
-                            color="primary"
-                        >
-                            <Typography>MENU</Typography>
-                        </AccordionSummary>
-                        <AccordionDetails>
-                            <ButtonGroup
-                                orientation="vertical"
-                                aria-label="vertical outlined button group"
+                        <Link to="/" style={{ textDecoration: 'none' }}>
+                            <img src={logo} alt="Logo" height="50px" />
+                        </Link>
+                    </Box>
+                    <IconButton
+                        color="inherit"
+                        aria-label="open drawer"
+                        edge="start"
+                        onClick={handleDrawerToggle}
+                        sx={{ mr: 2, display: { sm: 'none' } }}
+                    >
+                        <MenuIcon />
+                    </IconButton>
+
+                    <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+                        {navItems.map((item) => (
+                            <Button key={item} sx={{ color: '#fff' }}>
+                                {item}
+                            </Button>
+                        ))}
+                        {user ? (
+                            <Button
+                                onClick={() => dispatch(logout())}
+                                sx={{ color: '#fff', borderRadius: '50px' }}
+                                variant="contained"
+                                ml={1}
+                                startIcon={<PersonIcon />}
                             >
-                                <Button
-                                    sx={{ color: '#fff' }}
-                                    variant="outlined"
-                                >
-                                    Home
-                                </Button>
-                                <Button
-                                    sx={{ color: '#fff' }}
-                                    variant="outlined"
-                                >
-                                    Events
-                                </Button>
-                                <Button
-                                    sx={{ color: '#fff' }}
-                                    variant="outlined"
-                                >
-                                    Services
-                                </Button>
-                                <Button
-                                    sx={{ color: '#fff' }}
-                                    variant="outlined"
-                                >
-                                    About Us
-                                </Button>
-
-                                <Button
-                                    component={Link}
-                                    to="/login"
-                                    sx={{ color: '#fff' }}
-                                    variant="contained"
-                                    ml={1}
-                                    startIcon={<PersonIcon />}
-                                >
-                                    Log In
-                                </Button>
-                            </ButtonGroup>
-                        </AccordionDetails>
-                    </Accordion>
-                </Mobilescreen>
-            </StyledToolbar>
-        </AppBar>
+                                logout
+                            </Button>
+                        ) : (
+                            <Button
+                                component={Link}
+                                to="/login"
+                                sx={{ color: '#fff', borderRadius: '50px' }}
+                                variant="contained"
+                                ml={1}
+                                startIcon={<PersonIcon />}
+                            >
+                                Login
+                            </Button>
+                        )}
+                    </Box>
+                </Toolbar>
+            </AppBar>
+            <Box component="nav">
+                <Drawer
+                    container={container}
+                    anchor={'right'}
+                    variant="temporary"
+                    open={mobileOpen}
+                    onClose={handleDrawerToggle}
+                    ModalProps={{
+                        keepMounted: true, // Better open performance on mobile.
+                    }}
+                    sx={{
+                        display: { xs: 'block', sm: 'none' },
+                        '& .MuiDrawer-paper': {
+                            boxSizing: 'border-box',
+                            width: drawerWidth,
+                            height: 'fit-content',
+                            color: 'white',
+                            borderRadius: '10px',
+                            marginTop: '64px',
+                        },
+                    }}
+                >
+                    {drawer}
+                </Drawer>
+            </Box>
+        </Box>
     );
-};
+}
 
-export default Navbar;
+export default NavBar;
