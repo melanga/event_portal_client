@@ -13,17 +13,15 @@ const login = async (userData) => {
     if (response.data) {
         localStorage.setItem('user', JSON.stringify(response.data));
     }
-    return response.data;
+    return response;
 };
 
 // register user
 const register = async (userData) => {
-    const response = await axios.post(
-        'http://localhost:3000/api/v1/users/register',
-        {
-            userData,
-        }
-    );
+    console.log(userData);
+    const response = await axios.post('http://localhost:3000/api/v1/users', {
+        ...userData,
+    });
     return response.data;
 };
 

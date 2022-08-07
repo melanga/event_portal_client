@@ -1,9 +1,10 @@
 import { Stack, Typography, Button, Box } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import Input from './Input';
 import { useDispatch, useSelector } from 'react-redux';
-import { login } from '../../api/auth/authSlice';
+import { login, reset } from '../../api/auth/authSlice';
 
 export default function Login() {
     const [form, setForm] = useState({ username: '', password: '' });
@@ -13,15 +14,23 @@ export default function Login() {
     });
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { user, isSuccess } = useSelector((state) => state.auth);
+    const { user, isSuccess, isError, message } = useSelector(
+        (state) => state.auth
+    );
     useEffect(() => {
+        if (isError) {
+            toast.error(message);
+        }
         if (isSuccess && user) {
             navigate('/');
         }
-    }, [user, isSuccess, navigate]);
+        dispatch(reset());
+    }, [user, isSuccess, navigate, isError, message, dispatch]);
+
     const handleChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value });
     };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setFormErrors({

@@ -9,7 +9,11 @@ import {
 import React, { useEffect, useRef, useState } from 'react';
 import LocalLocations from '../../../resources/LocalLocations';
 import Footer from '../../../components/Footer';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { register, reset } from '../../../api/auth/authSlice';
+import _ from 'lodash';
+import { toast } from 'react-toastify';
 
 const form_initial_c = {
     first_name: '',
@@ -52,6 +56,21 @@ export default function RegisterPage({ isCustomer }) {
     );
     const isMounted = useRef(false);
 
+    const { user, isError, isSuccess, message } = useSelector(
+        (state) => state.auth
+    );
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    useEffect(() => {
+        if (isSuccess && user) {
+            navigate('/login');
+        }
+        if (isError) {
+            toast.error(message);
+        }
+        dispatch(reset());
+    });
+
     const handleChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value });
     };
@@ -82,7 +101,8 @@ export default function RegisterPage({ isCustomer }) {
             form.password === form.c_password
         ) {
             console.log('submitted');
-            console.log(form);
+            const user = _.omit(form, ['c_password']);
+            dispatch(register({ ...user, is_customer: isCustomer }));
         }
         isMounted.current = true;
     };
