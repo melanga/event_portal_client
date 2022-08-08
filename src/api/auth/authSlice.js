@@ -14,29 +14,37 @@ const initialState = {
 
 // register user
 export const register = createAsyncThunk(
-    'register',
+    'auth/register',
     async (userData, thunkAPI) => {
-        console.log(userData);
         try {
             return await authService.register(userData);
         } catch (e) {
-            console.log(e);
-            return thunkAPI.rejectWithValue(e.response.data);
+            return e.response.status === 404
+                ? thunkAPI.rejectWithValue({
+                      isError: true,
+                      message: 'Server Error, Try again later',
+                  })
+                : thunkAPI.rejectWithValue(e.response.data);
         }
     }
 );
 
 // login user
-export const login = createAsyncThunk('login', async (user, thunkAPI) => {
+export const login = createAsyncThunk('auth/login', async (user, thunkAPI) => {
     try {
         return await authService.login(user);
     } catch (e) {
-        return thunkAPI.rejectWithValue(e.response.data);
+        return e.response.status === 404
+            ? thunkAPI.rejectWithValue({
+                  isError: true,
+                  message: 'Server Error, Try again later',
+              })
+            : thunkAPI.rejectWithValue(e.response.data);
     }
 });
 
 // logout user
-export const logout = createAsyncThunk('logout', async () => {
+export const logout = createAsyncThunk('auth/logout', async () => {
     await authService.logout();
 });
 

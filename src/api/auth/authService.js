@@ -19,10 +19,9 @@ const login = async (userData) => {
 // register user
 const register = async (userData) => {
     console.log(userData);
-    const response = await axios.post('http://localhost:3000/api/v1/users', {
+    return await axios.post('http://localhost:3000/api/v1/users', {
         ...userData,
     });
-    return response.data;
 };
 
 // Logout user

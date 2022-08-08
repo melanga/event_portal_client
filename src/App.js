@@ -5,6 +5,8 @@ import Register from './pages/auth/Register';
 import NavBar from './components/NavBar';
 import { Layout } from './components/Layout';
 import RegisterPage from './pages/auth/Register/RegisterPage';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
     // eslint-disable-next-line no-unused-vars
@@ -71,6 +73,7 @@ function App() {
                     </Routes>
                 </div>
             </Router>
+            <ToastContainer position={'bottom-left'} autoClose={3000} />
         </>
     );
 }
