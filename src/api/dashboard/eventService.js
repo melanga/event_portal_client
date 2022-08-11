@@ -7,7 +7,7 @@ const createEvent = async (eventData) => {
     });
 };
 
-// get user events
+// get user dashboard
 const getUserEvents = async (userId) => {
     const token = localStorage.getItem('token');
     const config = {

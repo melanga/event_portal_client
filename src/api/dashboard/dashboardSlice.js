@@ -9,7 +9,7 @@ const initialState = {
 };
 
 export const createEvent = createAsyncThunk(
-    'events/create',
+    'dashboard/create',
     async (eventData, thunkAPI) => {
         try {
             return await eventService.createEvent(eventData);
@@ -20,7 +20,7 @@ export const createEvent = createAsyncThunk(
 );
 
 export const getUserEvents = createAsyncThunk(
-    'events/getUserEvents',
+    'dashboard/getUserEvents',
     async (userId, thunkAPI) => {
         try {
             return await eventService.getUserEvents(userId);
@@ -30,8 +30,8 @@ export const getUserEvents = createAsyncThunk(
     }
 );
 
-export const eventSlice = createSlice({
-    name: 'events',
+export const dashboardSlice = createSlice({
+    name: 'dashboard',
     initialState,
     reducers: {
         reset: (state) => {
@@ -69,5 +69,5 @@ export const eventSlice = createSlice({
     },
 });
 
-export const { reset } = eventSlice.actions;
-export default eventSlice.reducer;
+export const { reset } = dashboardSlice.actions;
+export default dashboardSlice.reducer;
