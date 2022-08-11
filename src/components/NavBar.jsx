@@ -16,7 +16,7 @@ import { Link } from 'react-router-dom';
 import logo from '../images/logo.png';
 import PersonIcon from '@mui/icons-material/Person';
 import { useDispatch, useSelector } from 'react-redux';
-import { logout } from '../api/auth/authSlice';
+import { logout } from '../api/reducers/authSlice';
 
 const drawerWidth = 240;
 const navItems = ['Home', 'Services', 'About', 'Contact'];

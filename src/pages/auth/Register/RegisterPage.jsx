@@ -11,7 +11,7 @@ import LocalLocations from '../../../resources/LocalLocations';
 import Footer from '../../../components/Footer';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { register, reset } from '../../../api/auth/authSlice';
+import { register, reset } from '../../../api/reducers/authSlice';
 import _ from 'lodash';
 import { toast } from 'react-toastify';
 

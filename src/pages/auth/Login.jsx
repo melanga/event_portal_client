@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Input from './Input';
 import { useDispatch, useSelector } from 'react-redux';
-import { login, reset } from '../../api/auth/authSlice';
+import { login, reset } from '../../api/reducers/authSlice';
 
 export default function Login() {
     const [form, setForm] = useState({ username: '', password: '' });
