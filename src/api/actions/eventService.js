@@ -21,4 +21,17 @@ const getUserEvents = async (userId) => {
     );
 };
 
-export const eventService = { createEvent, getUserEvents };
+// get an event
+const getEvent = async (eventId) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+    };
+    return await axios.get(
+        `http://localhost:3000/api/v1/events/${eventId}`,
+        config
+    );
+};
+
+export const eventService = { createEvent, getUserEvents, getEvent };

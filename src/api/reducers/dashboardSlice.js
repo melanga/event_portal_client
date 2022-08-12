@@ -8,17 +8,6 @@ const initialState = {
     message: '',
 };
 
-export const createEvent = createAsyncThunk(
-    'dashboard/create',
-    async (eventData, thunkAPI) => {
-        try {
-            return await eventService.createEvent(eventData);
-        } catch (e) {
-            return thunkAPI.rejectWithValue(e.response.data);
-        }
-    }
-);
-
 export const getUserEvents = createAsyncThunk(
     'dashboard/getUserEvents',
     async (userId, thunkAPI) => {
@@ -42,18 +31,6 @@ export const dashboardSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            .addCase(createEvent.pending, (state) => {
-                state.isLoading = true;
-            })
-            .addCase(createEvent.fulfilled, (state, action) => {
-                state.events.push(action.payload.data);
-                state.isLoading = false;
-            })
-            .addCase(createEvent.rejected, (state, action) => {
-                state.isError = true;
-                state.message = action.payload.message;
-                state.isLoading = false;
-            })
             .addCase(getUserEvents.pending, (state) => {
                 state.isLoading = true;
             })
