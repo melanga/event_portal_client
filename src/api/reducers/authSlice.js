@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { authService } from '../actions/authService';
+import { axiosErrorFormatter } from '../../utils/axiosErrorFormatter';
 
 // Get user from localStorage
 const user = JSON.parse(localStorage.getItem('user'));
@@ -19,12 +20,7 @@ export const register = createAsyncThunk(
         try {
             return await authService.register(userData);
         } catch (e) {
-            return e.response.status === 404
-                ? thunkAPI.rejectWithValue({
-                      isError: true,
-                      message: 'Server Error, Try again later',
-                  })
-                : thunkAPI.rejectWithValue(e.response.data);
+            return thunkAPI.rejectWithValue(axiosErrorFormatter(e));
         }
     }
 );
