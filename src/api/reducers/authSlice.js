@@ -20,7 +20,7 @@ export const register = createAsyncThunk(
         try {
             return await authService.register(userData);
         } catch (e) {
-            return thunkAPI.rejectWithValue(axiosErrorFormatter(e));
+            return axiosErrorFormatter(e, thunkAPI);
         }
     }
 );
@@ -30,12 +30,7 @@ export const login = createAsyncThunk('auth/login', async (user, thunkAPI) => {
     try {
         return await authService.login(user);
     } catch (e) {
-        return e.response.status === 404
-            ? thunkAPI.rejectWithValue({
-                  isError: true,
-                  message: 'Server Error, Try again later',
-              })
-            : thunkAPI.rejectWithValue(e.response.data);
+        return axiosErrorFormatter(e, thunkAPI);
     }
 });
 

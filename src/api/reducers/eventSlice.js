@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { eventService } from '../actions/eventService';
+import { axiosErrorFormatter } from '../../utils/axiosErrorFormatter';
 
 const initialState = {
     event: {},
@@ -15,7 +16,7 @@ export const createEvent = createAsyncThunk(
         try {
             return await eventService.createEvent(eventData);
         } catch (e) {
-            return thunkAPI.rejectWithValue(e.response.data);
+            return axiosErrorFormatter(e, thunkAPI);
         }
     }
 );
@@ -26,7 +27,7 @@ export const getEvent = createAsyncThunk(
         try {
             return await eventService.getEvent(eventId);
         } catch (e) {
-            return thunkAPI.rejectWithValue(e.response.data);
+            return axiosErrorFormatter(e, thunkAPI);
         }
     }
 );
