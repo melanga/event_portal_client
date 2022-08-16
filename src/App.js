@@ -7,37 +7,10 @@ import { Layout } from './components/Layout';
 import RegisterPage from './pages/auth/Register/RegisterPage';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import RequireAuth from './components/RequireAuth';
+import CustomerDashboard from './pages/dashboard/customerDashboard';
 
 function App() {
-    // eslint-disable-next-line no-unused-vars
-    // const [isAuthenticated, setIsAuthenticated] = useState(false);
-    // const checkAuthenticated = async () => {
-    //     try {
-    //         const token = localStorage.getItem('token');
-    //         if (token) {
-    //             const config = {
-    //                 headers: {
-    //                     Authorization: `Bearer ${token}`,
-    //                 },
-    //             };
-    //             const payload = await axios.get(
-    //                 'http://localhost:3000/api/v1/users/me',
-    //                 config
-    //             );
-    //             console.log(payload.data);
-    //             if (payload) {
-    //                 setIsAuthenticated(true);
-    //             }
-    //         }
-    //     } catch (e) {
-    //         console.log(e);
-    //     }
-    // };
-    //
-    // useEffect(() => {
-    //     checkAuthenticated().then((r) => {});
-    // }, []);
-
     return (
         <>
             <Router>
@@ -45,10 +18,7 @@ function App() {
                 <div className="container">
                     <Routes>
                         <Route path="/" element={<Layout />}>
-                            <Route
-                                path="/"
-                                element={<LandingPage isAuthenticated />}
-                            />
+                            <Route path="/" element={<LandingPage />} />
                             <Route exact path="login" element={<Login />} />
                             <Route
                                 exact
@@ -67,6 +37,12 @@ function App() {
                                     element={
                                         <RegisterPage isCustomer={false} />
                                     }
+                                />
+                            </Route>
+                            <Route element={<RequireAuth />}>
+                                <Route
+                                    path="dashboard"
+                                    element={<CustomerDashboard />}
                                 />
                             </Route>
                         </Route>
