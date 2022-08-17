@@ -11,9 +11,21 @@ const login = async (userData) => {
         }
     );
     if (response.data) {
-        localStorage.setItem('user', JSON.stringify(response.data));
+        localStorage.setItem('user', JSON.stringify(response.data.data));
+        localStorage.setItem('token', JSON.stringify(response.data.token));
     }
     return response;
+};
+
+// get user data
+const getUser = () => {
+    const token = localStorage.getItem('token');
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    };
+    return axios.get('http://localhost:3000/api/v1/users/me', config);
 };
 
 // register user
@@ -29,4 +41,4 @@ const logout = () => {
     localStorage.removeItem('user');
 };
 
-export const authService = { login, logout, register };
+export const authService = { login, logout, register, getUser };

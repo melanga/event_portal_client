@@ -11,6 +11,7 @@ const initialState = {
     isLoading: false,
     isError: false,
     message: '',
+    token: localStorage.getItem('token') ? localStorage.getItem('token') : null,
 };
 
 // register user
@@ -19,6 +20,18 @@ export const register = createAsyncThunk(
     async (userData, thunkAPI) => {
         try {
             return await authService.register(userData);
+        } catch (e) {
+            return axiosErrorFormatter(e, thunkAPI);
+        }
+    }
+);
+
+// get user data
+export const getUser = createAsyncThunk(
+    'auth/getUser',
+    async (userData, thunkAPI) => {
+        try {
+            return await authService.getUser();
         } catch (e) {
             return axiosErrorFormatter(e, thunkAPI);
         }
@@ -78,6 +91,20 @@ export const authSlice = createSlice({
                 state.user = action.payload;
             })
             .addCase(register.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.message = action.payload.message;
+                state.user = null;
+            })
+            .addCase(getUser.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(getUser.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = true;
+                state.user = action.payload.data;
+            })
+            .addCase(getUser.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isError = true;
                 state.message = action.payload.message;
