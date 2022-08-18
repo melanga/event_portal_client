@@ -10,7 +10,9 @@ const RequireAuth = ({ allowedRoles }) => {
             navigate('/login');
         }
     });
-    return <Outlet />;
+    if (user) {
+        return <Outlet />;
+    }
 };
 
 export default RequireAuth;
