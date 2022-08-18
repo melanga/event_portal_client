@@ -6,10 +6,10 @@ import { Layout } from '../components/Layout';
 import RegisterPage from '../pages/auth/Register/RegisterPage';
 
 const PublicRoutes = [
-    <Route path="/" element={<LandingPage />} />,
-    <Route path="login" element={<Login />} />,
-    <Route path="register" element={<Register />} />,
-    <Route path="register" element={<Layout />}>
+    <Route key={'/'} path="/" element={<LandingPage />} />,
+    <Route key={'login'} path="login" element={<Login />} />,
+    <Route key={'register'} path="register" element={<Register />} />,
+    <Route key={'register page'} path="register" element={<Layout />}>
         <Route path="customer" element={<RegisterPage isCustomer={true} />} />
         <Route
             path="service_provider"
