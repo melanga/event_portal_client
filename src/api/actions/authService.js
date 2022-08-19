@@ -39,6 +39,7 @@ const register = async (userData) => {
 // Logout user
 const logout = () => {
     localStorage.removeItem('user');
+    localStorage.removeItem('token');
 };
 
 export const authService = { login, logout, register, getUser };
