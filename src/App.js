@@ -16,7 +16,11 @@ function App() {
                     <Routes>
                         <Route path="/" element={<Layout />}>
                             {PublicRoutes}
-                            <Route element={<RequireAuth />}>
+                            <Route
+                                element={
+                                    <RequireAuth allowedRoles={['customer']} />
+                                }
+                            >
                                 <Route
                                     path="dashboard"
                                     element={<CustomerDashboard />}
