@@ -1,27 +1,32 @@
 import { Outlet, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
-// TODO: test this component
 const RequireAuth = ({ allowedRoles }) => {
-    console.log(allowedRoles);
     const navigate = useNavigate();
     const { user } = useSelector((state) => state.auth);
+    const [userRole, setUserRole] = useState('guest');
 
+    // check if user is logged in
     useEffect(() => {
         if (!user) {
             navigate('/login');
+        } else {
+            setUserRole(user.service_title ? 'service_provider' : 'customer');
         }
     }, [navigate, user]);
+
+    // check for user role and redirect if not allowed
+    useEffect(() => {
+        if (userRole !== 'guest' && !allowedRoles.includes(userRole)) {
+            navigate('/login');
+        }
+    }, [allowedRoles, navigate, user, userRole]);
+
     if (user) {
-        allowedRoles.forEach((role) => {
-            if (
-                (user.service_title && role === 'service_provider') ||
-                (!user.service_title && role === 'customer')
-            ) {
-                return <Outlet />;
-            }
-        });
+        if (allowedRoles.includes(userRole)) {
+            return <Outlet />;
+        }
     }
 };
 
