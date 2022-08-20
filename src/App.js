@@ -6,8 +6,20 @@ import 'react-toastify/dist/ReactToastify.css';
 import RequireAuth from './components/RequireAuth';
 import CustomerDashboard from './pages/dashboard/customerDashboard';
 import PublicRoutes from './routes/PublicRoutes';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUser } from './api/reducers/authSlice';
 
 function App() {
+    const { user, token } = useSelector((state) => state.auth);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (!user && token) {
+            dispatch(getUser());
+        }
+    }, [user, token, dispatch]);
+
     return (
         <>
             <Router>
