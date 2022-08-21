@@ -4,17 +4,22 @@ import { useEffect, useState } from 'react';
 
 const RequireAuth = ({ allowedRoles }) => {
     const navigate = useNavigate();
+    const token = useSelector((state) => state.auth.token);
     const { user } = useSelector((state) => state.auth);
     const [userRole, setUserRole] = useState('guest');
 
     // check if user is logged in
     useEffect(() => {
-        if (!user) {
+        if (!token) {
             navigate('/login');
         } else {
-            setUserRole(user.service_title ? 'service_provider' : 'customer');
+            if (user) {
+                setUserRole(
+                    user.service_title ? 'service_provider' : 'customer'
+                );
+            }
         }
-    }, [navigate, user]);
+    }, [navigate, token, user]);
 
     // check for user role and redirect if not allowed
     useEffect(() => {
