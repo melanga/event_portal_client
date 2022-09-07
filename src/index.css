@@ -1,13 +1,86 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.inputRounded .MuiOutlinedInput-root {
+  border-radius: 100px;
+}
+
+.SearchTitle{
+  font-size: 2rem;
+  font-weight: 300;
+  color: #222831;
+  margin-bottom: 10px;
+}
+
+.BrowseTitle{
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: #222831;
+}
+
+.navbarButtons{
+  font-weight: 500;
+  color:#222831 ;
+}
+.navbarButtons:hover{
+  font-weight: 600;
+}
+
+.navbarLoginButton:hover{
+  color:#222831 ;
+}
+
+.bottomContent-buttons{
+  font-weight: 300;
+  font-size: 1rem;
+}
+.bottomContent-buttons:hover{
+  font-weight: 600;
+  color: #00ADB5;
+
+}
+
+.bottomContent-title{
+  font-size: 1.5rem;
+  font-weight: 300;
+  margin-bottom: 10px;
+}
+
+
+
+
+.searchContainer{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+}
+
+.viewMoreButton{
+  font-weight: 500;
+  color:#222831 ;
+}
+
+.bottomButtons{
+  font-weight: 300;
+  color:#fff ;
+}
+
+.footerDec{
+  font-size: .8em;
+}
+
+/* SERVICE CARD STYLES */
+.serviceCardTitle{
+  font-size: 1.75em;
+  font-weight: 400;
+}
+.serviceCardCategory{
+  font-size: 1.25em;
+  font-weight: 700;
 }

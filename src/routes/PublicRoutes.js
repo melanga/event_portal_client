@@ -4,6 +4,7 @@ import Login from '../pages/auth/Login';
 import Register from '../pages/auth/Register';
 import { Layout } from '../components/Layout';
 import RegisterPage from '../pages/auth/Register/RegisterPage';
+import SearchPage from '../pages/search';
 
 const PublicRoutes = [
     <Route key={'/'} path="/" element={<LandingPage />} />,
@@ -16,6 +17,7 @@ const PublicRoutes = [
             element={<RegisterPage isCustomer={false} />}
         />
     </Route>,
+    <Route key={'search page'} path={'search'} element={<SearchPage />} />,
 ];
 
 export default PublicRoutes;
