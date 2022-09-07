@@ -12,11 +12,18 @@ const LocalLocations = ({ handleChange }) => {
             {...defaultProps}
             id="location"
             clearOnEscape
-            onChange={handleChange}
+            onChange={(event, value) => {
+                const values = {
+                    target: {
+                        name: 'location',
+                        value: value.title,
+                    },
+                };
+                handleChange(values);
+            }}
             renderInput={(params) => (
                 <TextField
                     {...params}
-                    name={'location'}
                     label="Your District"
                     margin={'dense'}
                     variant="outlined"

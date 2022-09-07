@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCategories } from '../../api/reducers/serviceProviderSlice';
 
-const LocalLocations = ({ setCategory }) => {
+const Categories = ({ setCategory }) => {
     const dispatch = useDispatch();
     const { categories } = useSelector((state) => state.service_provider);
 
@@ -57,4 +57,4 @@ const LocalLocations = ({ setCategory }) => {
 //     { title: 'Other' },
 // ];
 
-export default LocalLocations;
+export default Categories;

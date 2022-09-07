@@ -7,13 +7,13 @@ import {
     TextField,
 } from '@mui/material';
 import React, { useEffect, useRef, useState } from 'react';
-import LocalLocations from '../../../resources/LocalLocations';
 import Footer from '../../../components/Footer';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { register, reset } from '../../../api/reducers/authSlice';
 import _ from 'lodash';
 import { toast } from 'react-toastify';
+import LocalLocations from '../../../resources/LocalLocations';
 
 const form_initial_c = {
     first_name: '',
@@ -94,13 +94,11 @@ export default function RegisterPage({ isCustomer }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
         handleErrors();
         if (
             !Object.values(form).some((value) => value === '') &&
             form.password === form.c_password
         ) {
-            console.log('submitted');
             const user = _.omit(form, ['c_password']);
             dispatch(register({ ...user, is_customer: isCustomer }));
         }
@@ -109,7 +107,6 @@ export default function RegisterPage({ isCustomer }) {
 
     useEffect(() => {
         if (isMounted.current) {
-            console.log('mounted');
             handleErrors();
             isMounted.current = false;
         }
@@ -244,6 +241,7 @@ export default function RegisterPage({ isCustomer }) {
                             />
                         )}
                         <LocalLocations handleChange={handleChange} />
+                        {/*<LocalLocations handleChange={handleChange} />*/}
                         <Button
                             fullWidth={true}
                             variant="contained"
