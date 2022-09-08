@@ -19,7 +19,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../api/reducers/authSlice';
 
 const drawerWidth = 240;
-const navItems = ['Home', 'Services', 'About', 'Contact'];
+const navItems = [
+    { name: 'Home', path: '/' },
+    { name: 'Services', path: '/search' },
+    { name: 'About', path: '/about' },
+    { name: 'Contact', path: '/contact' },
+];
+// const navItems = ['Home', 'Services', 'About', 'Contact'];
 
 function NavBar(props) {
     const { window } = props;
@@ -41,13 +47,19 @@ function NavBar(props) {
             </Typography>
             <Divider color={'white'} />
             <List>
-                {navItems.map((item) => (
-                    <ListItem key={item} disablePadding>
-                        <ListItemButton sx={{ textAlign: 'center' }}>
-                            <ListItemText primary={item} />
-                        </ListItemButton>
-                    </ListItem>
-                ))}
+                {navItems.map((item) => {
+                    return (
+                        <ListItem key={item.name} disablePadding>
+                            <ListItemButton
+                                component={Link}
+                                to={item.path}
+                                sx={{ textAlign: 'center' }}
+                            >
+                                <ListItemText primary={item.name} />
+                            </ListItemButton>
+                        </ListItem>
+                    );
+                })}
             </List>
         </Box>
     );
@@ -81,8 +93,13 @@ function NavBar(props) {
 
                     <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
                         {navItems.map((item) => (
-                            <Button key={item} sx={{ color: '#fff' }}>
-                                {item}
+                            <Button
+                                component={Link}
+                                to={item.path}
+                                key={item.name}
+                                sx={{ color: '#fff' }}
+                            >
+                                {item.name}
                             </Button>
                         ))}
                         {user ? (
