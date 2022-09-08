@@ -26,7 +26,9 @@ const Searchbar = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         dispatch(searchServiceProvider(search));
-        console.log(search, location, category);
+        if (location !== '' || category !== '') {
+            dispatch(filterServiceProvider({ location, category }));
+        }
     };
     const dispatch = useDispatch();
     const { categories } = useSelector((state) => state.service_provider);
@@ -48,12 +50,7 @@ const Searchbar = () => {
     return (
         <Container maxWidth="lg" justifycontent="center" align="center">
             <Box p={3}>
-                <h2
-                    className="SearchTitle"
-                    sx={{ display: { xs: 'block', sm: 'none' } }}
-                >
-                    Search Services Here...
-                </h2>
+                <h2 className="SearchTitle">Search Services Here...</h2>
                 <Stack
                     sx={{
                         //   width: 500,

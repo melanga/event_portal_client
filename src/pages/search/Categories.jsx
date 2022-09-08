@@ -26,6 +26,9 @@ const Categories = ({ setCategory }) => {
             onChange={(event, value) => setCategory(value.title)}
             {...defaultProps}
             {...defaultProps}
+            isOptionEqualToValue={(option, value) =>
+                option.title === value.title
+            }
             id="categorySearch"
             clearOnEscape
             margin="dense"

@@ -12,6 +12,9 @@ const LocalLocations = ({ setLocation }) => {
             {...defaultProps}
             id="locationSearch"
             clearOnEscape
+            isOptionEqualToValue={(option, value) =>
+                option.title === value.title
+            }
             margin="dense"
             onChange={(event, value) => setLocation(value.title)}
             renderInput={(params) => (
