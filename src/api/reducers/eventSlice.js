@@ -4,6 +4,7 @@ import { axiosErrorFormatter } from '../../utils/axiosErrorFormatter';
 
 const initialState = {
     event: {},
+    events: [],
     service_providers: [],
     isLoading: false,
     isError: false,
@@ -26,6 +27,39 @@ export const getEvent = createAsyncThunk(
     async (eventId, thunkAPI) => {
         try {
             return await eventService.getEvent(eventId);
+        } catch (e) {
+            return axiosErrorFormatter(e, thunkAPI);
+        }
+    }
+);
+
+export const getEvents = createAsyncThunk(
+    'event/getAll',
+    async (userId, thunkAPI) => {
+        try {
+            return await eventService.getUserEvents(userId);
+        } catch (e) {
+            return axiosErrorFormatter(e, thunkAPI);
+        }
+    }
+);
+
+export const deleteEvent = createAsyncThunk(
+    'event/delete',
+    async (eventId, thunkAPI) => {
+        try {
+            return await eventService.deleteEvent(eventId);
+        } catch (e) {
+            return axiosErrorFormatter(e, thunkAPI);
+        }
+    }
+);
+
+export const getEventServiceProviders = createAsyncThunk(
+    'event/getServiceProviders',
+    async (eventId, thunkAPI) => {
+        try {
+            return await eventService.getEventServiceProviders(eventId);
         } catch (e) {
             return axiosErrorFormatter(e, thunkAPI);
         }
@@ -56,6 +90,9 @@ export const eventSlice = createSlice({
                 state.message = action.payload.message;
                 state.isLoading = false;
             })
+            .addCase(deleteEvent.fulfilled, (state, action) => {
+                state.isLoading = false;
+            })
             .addCase(getEvent.pending, (state) => {
                 state.isLoading = true;
             })
@@ -65,6 +102,33 @@ export const eventSlice = createSlice({
                 state.isLoading = false;
             })
             .addCase(getEvent.rejected, (state, action) => {
+                state.isError = true;
+                state.message = action.payload.message;
+                state.isLoading = false;
+            })
+            .addCase(getEvents.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(getEvents.fulfilled, (state, action) => {
+                if (action.payload.data.length > 0) {
+                    state.event = action.payload.data[0];
+                }
+                state.events = action.payload.data;
+                state.isLoading = false;
+            })
+            .addCase(getEvents.rejected, (state, action) => {
+                state.isError = true;
+                state.message = action.payload.message;
+                state.isLoading = false;
+            })
+            .addCase(getEventServiceProviders.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(getEventServiceProviders.fulfilled, (state, action) => {
+                state.service_providers = action.payload.data;
+                state.isLoading = false;
+            })
+            .addCase(getEventServiceProviders.rejected, (state, action) => {
                 state.isError = true;
                 state.message = action.payload.message;
                 state.isLoading = false;
