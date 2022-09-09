@@ -1,15 +1,39 @@
 import { Box, ListItem, ListItemButton, TextField } from '@mui/material';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import List from '@mui/material/List';
 import Avatar from '@mui/material/Avatar';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import InputAdornment from '@mui/material/InputAdornment';
 import Chats from '../../sampleData/chats.json';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+    getEventRequirements,
+    reset,
+} from '../../api/reducers/requirementSlice';
+import { toast } from 'react-toastify';
 
 const UDRightBar = () => {
-    const { service_providers } = useSelector((state) => state.event);
+    const { event } = useSelector((state) => state.event);
+    const { requirements, isError, message } = useSelector(
+        (state) => state.requirement
+    );
+
+    const dispatch = useDispatch();
+    useEffect(() => {
+        if (event.id) {
+            dispatch(getEventRequirements(event.id));
+        }
+    }, [event.id, dispatch]);
+
+    // display error using toast if any
+    useEffect(() => {
+        if (isError) {
+            toast.error(message);
+        }
+        dispatch(reset());
+    }, [dispatch, isError, message]);
+
     //SEARCH FILTER-----------------------------------
     const [searchFilter, setSearchFilter] = useState('');
 
@@ -17,7 +41,7 @@ const UDRightBar = () => {
         <Box>
             {/* FOR DESKTOP----------------------------------------------------- */}
             <Box
-                bgcolor="#F5F5F5"
+                bgcolor="#E0F2F1"
                 flex={2}
                 p={4}
                 minHeight={'100%'}
@@ -41,23 +65,26 @@ const UDRightBar = () => {
                 />
                 <Box mt={3} style={{ maxHeight: 400, overflow: 'auto' }}>
                     <List>
-                        {service_providers
-                            .filter((chat) => {
+                        {requirements
+                            .filter((requirement) => {
                                 if (searchFilter === '') {
-                                    return chat;
+                                    return requirement;
                                 } else if (
-                                    chat.name
+                                    requirement.title
+                                        .toLowerCase()
+                                        .includes(searchFilter.toLowerCase()) ||
+                                    requirement.description
                                         .toLowerCase()
                                         .includes(searchFilter.toLowerCase())
                                 ) {
-                                    return chat;
+                                    return requirement;
                                 } else {
                                     return null;
                                 }
                             })
-                            .map((chat) => (
+                            .map((requirement) => (
                                 <ListItem
-                                    key={chat.service_provider_id}
+                                    key={requirement.id}
                                     disablePadding={true}
                                     disableGutters={true}
                                 >
@@ -67,12 +94,27 @@ const UDRightBar = () => {
                                             '&:hover': {
                                                 backgroundColor: '#B2DFDB',
                                             },
+                                            backgroundColor: '#80CBC4',
+                                            boxShadow: 1,
                                         }}
                                     >
                                         {/*<ListItemAvatar>*/}
                                         {/*    <Avatar src={chat.avatar} />*/}
                                         {/*</ListItemAvatar>*/}
-                                        <p>{chat.first_name}</p>
+                                        <Box
+                                            sx={{
+                                                display: 'flex',
+                                                flexDirection: 'column',
+                                                justifyContent: 'left',
+                                                alignItems: 'left',
+                                                width: '100%',
+                                            }}
+                                        >
+                                            <p>{requirement.title}</p>
+                                            <p style={{ fontSize: '12px' }}>
+                                                {requirement.description}
+                                            </p>
+                                        </Box>
                                     </ListItemButton>
                                 </ListItem>
                             ))}
