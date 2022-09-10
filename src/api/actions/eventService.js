@@ -2,9 +2,21 @@ import axios from 'axios';
 
 // create event
 const createEvent = async (eventData) => {
-    return await axios.post('http://localhost:3000/api/v1/events/', {
-        ...eventData,
-    });
+    const token = localStorage.getItem('token');
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    };
+    console.log({ ...eventData });
+    const result = await axios.post(
+        'http://localhost:3000/api/v1/events/',
+        {
+            ...eventData,
+        },
+        config
+    );
+    return result.data;
 };
 
 // get user dashboard

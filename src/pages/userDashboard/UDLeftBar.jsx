@@ -1,13 +1,13 @@
 import * as React from 'react';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
-import { Box, Button, Divider, TextField } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
+import { Box, Divider, TextField } from '@mui/material';
 import ListItem from '@mui/material/ListItem';
 import ClearIcon from '@mui/icons-material/Clear';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getEvents } from '../../api/reducers/eventSlice';
+import CreateEventDialog from './CreateEventDialog';
 
 const UDLeftBar = () => {
     const dispatch = useDispatch();
@@ -100,31 +100,7 @@ const UDLeftBar = () => {
                         sx={{ marginTop: 3 }}
                     />
                     {/* CREATE NEW EVENT BUTTON---------------------------------------------------- */}
-                    <Button
-                        fullWidth={true}
-                        variant="contained"
-                        size="medium"
-                        sx={{
-                            borderRadius: '50px',
-                            maxHeight: '50px',
-                            textTransform: 'none',
-                            justifyContent: 'center',
-                            color: '#fff',
-                            backgroundColor: '#00ADB5',
-                            marginTop: '20px',
-                            '&:hover': {
-                                backgroundColor: '#1A2027',
-                                border: '2px solid #00ADB5',
-                            },
-                        }}
-                        textDecoration="none"
-                        href="/EventCreate"
-                        endIcon={<AddIcon color="inherit" />}
-                    >
-                        <h3 className="userCreateEventButton">
-                            Create a New Event
-                        </h3>
-                    </Button>
+                    <CreateEventDialog />
                 </Box>
             </Box>
         </div>

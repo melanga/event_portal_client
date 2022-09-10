@@ -86,11 +86,12 @@ export const eventSlice = createSlice({
                 state.isLoading = false;
             })
             .addCase(createEvent.rejected, (state, action) => {
+                console.log(action.payload);
                 state.isError = true;
                 state.message = action.payload.message;
                 state.isLoading = false;
             })
-            .addCase(deleteEvent.fulfilled, (state, action) => {
+            .addCase(deleteEvent.fulfilled, (state) => {
                 state.isLoading = false;
             })
             .addCase(getEvent.pending, (state) => {

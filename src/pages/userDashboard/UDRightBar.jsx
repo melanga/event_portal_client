@@ -5,7 +5,6 @@ import List from '@mui/material/List';
 import Avatar from '@mui/material/Avatar';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import InputAdornment from '@mui/material/InputAdornment';
-import Chats from '../../sampleData/chats.json';
 import { useDispatch, useSelector } from 'react-redux';
 import {
     getEventRequirements,
@@ -143,32 +142,34 @@ const UDRightBar = () => {
                 />
                 <Box mt={3} style={{ maxHeight: 400, overflow: 'auto' }}>
                     <List>
-                        {Chats.filter((chat) => {
-                            if (searchFilter === '') {
-                                return chat;
-                            } else if (
-                                chat.name
-                                    .toLowerCase()
-                                    .includes(searchFilter.toLowerCase())
-                            ) {
-                                return chat;
-                            } else {
-                                return null;
-                            }
-                        }).map((chat) => (
-                            <ListItem
-                                key={chat.name}
-                                disablePadding
-                                disableGutters
-                            >
-                                <ListItemButton>
-                                    <ListItemAvatar>
-                                        <Avatar src={chat.avatar} />
-                                    </ListItemAvatar>
-                                    <p>{chat.name}</p>
-                                </ListItemButton>
-                            </ListItem>
-                        ))}
+                        {requirements
+                            .filter((requirement) => {
+                                if (searchFilter === '') {
+                                    return requirement;
+                                } else if (
+                                    requirement.name
+                                        .toLowerCase()
+                                        .includes(searchFilter.toLowerCase())
+                                ) {
+                                    return requirement;
+                                } else {
+                                    return null;
+                                }
+                            })
+                            .map((requirement) => (
+                                <ListItem
+                                    key={requirement.name}
+                                    disablePadding
+                                    disableGutters
+                                >
+                                    <ListItemButton>
+                                        <ListItemAvatar>
+                                            <Avatar src={requirement.avatar} />
+                                        </ListItemAvatar>
+                                        <p>{requirement.name}</p>
+                                    </ListItemButton>
+                                </ListItem>
+                            ))}
                     </List>
                 </Box>
             </Box>
