@@ -11,6 +11,7 @@ import {
     reset,
 } from '../../api/reducers/requirementSlice';
 import { toast } from 'react-toastify';
+import CreateRequirementDialog from './CreateRequirementDialog';
 
 const UDRightBar = () => {
     const { event } = useSelector((state) => state.event);
@@ -55,7 +56,7 @@ const UDRightBar = () => {
                     endadornment={
                         <InputAdornment position="end">kg</InputAdornment>
                     }
-                    placeholder="Search Your Chats Here"
+                    placeholder="Search Your Requirements Here"
                     id="searchEvent"
                     sx={{
                         borderRadius: '50px',
@@ -86,6 +87,7 @@ const UDRightBar = () => {
                                     key={requirement.id}
                                     disablePadding={true}
                                     disableGutters={true}
+                                    sx={{ paddingY: 1 }}
                                 >
                                     <ListItemButton
                                         sx={{
@@ -119,6 +121,7 @@ const UDRightBar = () => {
                             ))}
                     </List>
                 </Box>
+                <CreateRequirementDialog />
             </Box>
 
             {/* FOR MOBILE----------------------------------------------------------- */}

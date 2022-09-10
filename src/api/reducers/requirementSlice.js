@@ -20,6 +20,17 @@ export const getEventRequirements = createAsyncThunk(
     }
 );
 
+export const createEventRequirement = createAsyncThunk(
+    'requirement/createEventRequirement',
+    async (data, thunkAPI) => {
+        try {
+            return await requirementsService.createEventRequirement(data);
+        } catch (e) {
+            return axiosErrorFormatter(e, thunkAPI);
+        }
+    }
+);
+
 export const requirementSlice = createSlice({
     name: 'requirement',
     initialState,
@@ -42,6 +53,19 @@ export const requirementSlice = createSlice({
                 state.requirements = action.payload.data;
             })
             .addCase(getEventRequirements.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.message = action.payload.message;
+            })
+            .addCase(createEventRequirement.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(createEventRequirement.fulfilled, (state) => {
+                state.isLoading = false;
+                state.isError = false;
+                state.message = '';
+            })
+            .addCase(createEventRequirement.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isError = true;
                 state.message = action.payload.message;
