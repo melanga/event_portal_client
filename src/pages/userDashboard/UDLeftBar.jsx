@@ -6,12 +6,12 @@ import ListItem from '@mui/material/ListItem';
 import ClearIcon from '@mui/icons-material/Clear';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getEvents } from '../../api/reducers/eventSlice';
+import { getEvents, setEvent } from '../../api/reducers/eventSlice';
 import CreateEventDialog from './CreateEventDialog';
 
 const UDLeftBar = () => {
     const dispatch = useDispatch();
-    const { events } = useSelector((state) => state.event);
+    const { event, events } = useSelector((state) => state.event);
     const { user } = useSelector((state) => state.auth);
 
     useEffect(() => {
@@ -62,24 +62,42 @@ const UDLeftBar = () => {
                     {/* USER EVENT LIST---------------------------------------------------- */}
                     <List>
                         {events
-                            .filter((event) => {
+                            .filter((eachEvent) => {
                                 if (searchFilter === '') {
-                                    return event;
+                                    return eachEvent;
                                 } else if (
-                                    event.name
+                                    eachEvent.name
                                         .toLowerCase()
                                         .includes(searchFilter.toLowerCase())
                                 ) {
-                                    return event;
+                                    return eachEvent;
                                 } else {
                                     return null;
                                 }
                             })
-                            .map((event) => (
-                                <ListItem key={event.id} disablePadding>
-                                    <ListItemButton>
-                                        <p className="userEventListName">
-                                            {event.name}
+                            .map((eachEvent) => (
+                                <ListItem key={eachEvent.id} disablePadding>
+                                    <ListItemButton
+                                        onClick={() => {
+                                            dispatch(setEvent(eachEvent));
+                                        }}
+                                    >
+                                        <p
+                                            className="userEventListName"
+                                            // color={
+                                            //     eachEvent.id === event.id
+                                            //         ? 'white'
+                                            //         : 'red'
+                                            // }
+                                            style={{
+                                                color:
+                                                    eachEvent.id === event.id
+                                                        ? '#80CBC4'
+                                                        : 'white',
+                                            }}
+                                            //color={'white'}
+                                        >
+                                            {eachEvent.name}
                                         </p>
                                     </ListItemButton>
                                     <ListItemButton

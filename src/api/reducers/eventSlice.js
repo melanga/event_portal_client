@@ -75,6 +75,9 @@ export const eventSlice = createSlice({
             state.isError = false;
             state.message = '';
         },
+        setEvent: (state, action) => {
+            state.event = action.payload;
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -137,5 +140,5 @@ export const eventSlice = createSlice({
     },
 });
 
-export const { reset } = eventSlice.actions;
+export const { reset, setEvent } = eventSlice.actions;
 export default eventSlice.reducer;
