@@ -40,6 +40,11 @@ const UDFeed = () => {
                         ))}
                 </Grid>
             </Box>
+            {service_providers.length === 0 && (
+                <p style={{ textAlign: 'center' }}>
+                    Add service provider to your event
+                </p>
+            )}
         </Box>
     );
 };

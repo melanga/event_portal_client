@@ -7,6 +7,7 @@ const initialState = {
     events: [],
     service_providers: [],
     isLoading: false,
+    isSuccess: false,
     isError: false,
     message: '',
 };
@@ -73,6 +74,7 @@ export const eventSlice = createSlice({
         reset: (state) => {
             state.isLoading = false;
             state.isError = false;
+            state.isSuccess = false;
             state.message = '';
         },
         setEvent: (state, action) => {
@@ -83,19 +85,22 @@ export const eventSlice = createSlice({
         builder
             .addCase(createEvent.pending, (state) => {
                 state.isLoading = true;
+                state.isSuccess = false;
             })
             .addCase(createEvent.fulfilled, (state, action) => {
                 state.event = action.payload.data;
                 state.isLoading = false;
+                state.isSuccess = true;
             })
             .addCase(createEvent.rejected, (state, action) => {
-                console.log(action.payload);
                 state.isError = true;
                 state.message = action.payload.message;
                 state.isLoading = false;
             })
             .addCase(deleteEvent.fulfilled, (state) => {
                 state.isLoading = false;
+                state.isSuccess = true;
+                state.message = 'Event deleted successfully';
             })
             .addCase(getEvent.pending, (state) => {
                 state.isLoading = true;

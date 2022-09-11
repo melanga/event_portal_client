@@ -2,8 +2,6 @@ import { Box, ListItem, ListItemButton, TextField } from '@mui/material';
 import React, { useEffect } from 'react';
 import { useState } from 'react';
 import List from '@mui/material/List';
-import Avatar from '@mui/material/Avatar';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
 import InputAdornment from '@mui/material/InputAdornment';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -50,7 +48,11 @@ const UDRightBar = () => {
             >
                 <h3 className="userChatTitle">Requirements</h3>
                 <TextField
-                    onChange={(e) => setSearchFilter(e.target.value)}
+                    onChange={(e) => {
+                        console.log(e.target.value);
+                        setSearchFilter(e.target.value);
+                        //setSearchFilter(e.target.value);
+                    }}
                     className="searchUserBar"
                     fullWidth
                     endadornment={
@@ -64,62 +66,71 @@ const UDRightBar = () => {
                     }}
                 />
                 <Box mt={3} style={{ maxHeight: 400, overflow: 'auto' }}>
-                    <List>
-                        {requirements
-                            .filter((requirement) => {
-                                if (searchFilter === '') {
-                                    return requirement;
-                                } else if (
-                                    requirement.title
-                                        .toLowerCase()
-                                        .includes(searchFilter.toLowerCase()) ||
-                                    requirement.description
-                                        .toLowerCase()
-                                        .includes(searchFilter.toLowerCase())
-                                ) {
-                                    return requirement;
-                                } else {
-                                    return null;
-                                }
-                            })
-                            .map((requirement) => (
-                                <ListItem
-                                    key={requirement.id}
-                                    disablePadding={true}
-                                    disableGutters={true}
-                                    sx={{ paddingY: 1 }}
-                                >
-                                    <ListItemButton
-                                        sx={{
-                                            borderRadius: '15px',
-                                            '&:hover': {
-                                                backgroundColor: '#B2DFDB',
-                                            },
-                                            backgroundColor: '#80CBC4',
-                                            boxShadow: 1,
-                                        }}
+                    {requirements.length !== 0 && (
+                        <List>
+                            {requirements
+                                .filter((requirement) => {
+                                    if (searchFilter === '') {
+                                        return requirement;
+                                    } else if (
+                                        requirement.title
+                                            .toLowerCase()
+                                            .includes(
+                                                searchFilter.toLowerCase()
+                                            ) ||
+                                        requirement.description
+                                            .toLowerCase()
+                                            .includes(
+                                                searchFilter.toLowerCase()
+                                            )
+                                    ) {
+                                        return requirement;
+                                    } else {
+                                        return null;
+                                    }
+                                })
+                                .map((requirement) => (
+                                    <ListItem
+                                        key={requirement.id}
+                                        disablePadding={true}
+                                        disableGutters={true}
+                                        sx={{ paddingY: 1 }}
                                     >
-                                        {/*<ListItemAvatar>*/}
-                                        {/*    <Avatar src={chat.avatar} />*/}
-                                        {/*</ListItemAvatar>*/}
-                                        <Box
+                                        <ListItemButton
                                             sx={{
-                                                display: 'flex',
-                                                flexDirection: 'column',
-                                                justifyContent: 'left',
-                                                alignItems: 'left',
-                                                width: '100%',
+                                                borderRadius: '15px',
+                                                '&:hover': {
+                                                    backgroundColor: '#B2DFDB',
+                                                },
+                                                backgroundColor: '#80CBC4',
+                                                boxShadow: 1,
                                             }}
                                         >
-                                            <p>{requirement.title}</p>
-                                            <p style={{ fontSize: '12px' }}>
-                                                {requirement.description}
-                                            </p>
-                                        </Box>
-                                    </ListItemButton>
-                                </ListItem>
-                            ))}
-                    </List>
+                                            <Box
+                                                sx={{
+                                                    display: 'flex',
+                                                    flexDirection: 'column',
+                                                    justifyContent: 'left',
+                                                    alignItems: 'left',
+                                                    width: '100%',
+                                                }}
+                                            >
+                                                <p>{requirement.title}</p>
+                                                <p style={{ fontSize: '12px' }}>
+                                                    {requirement.description}
+                                                </p>
+                                            </Box>
+                                        </ListItemButton>
+                                    </ListItem>
+                                ))}
+                        </List>
+                    )}
+                    {requirements.length === 0 && (
+                        <p>
+                            You can define your event requirements so that
+                            service providers can bid.
+                        </p>
+                    )}
                 </Box>
                 <CreateRequirementDialog />
             </Box>
@@ -150,7 +161,7 @@ const UDRightBar = () => {
                                 if (searchFilter === '') {
                                     return requirement;
                                 } else if (
-                                    requirement.name
+                                    requirement.title
                                         .toLowerCase()
                                         .includes(searchFilter.toLowerCase())
                                 ) {
@@ -161,15 +172,12 @@ const UDRightBar = () => {
                             })
                             .map((requirement) => (
                                 <ListItem
-                                    key={requirement.name}
+                                    key={requirement.id}
                                     disablePadding
                                     disableGutters
                                 >
                                     <ListItemButton>
-                                        <ListItemAvatar>
-                                            <Avatar src={requirement.avatar} />
-                                        </ListItemAvatar>
-                                        <p>{requirement.name}</p>
+                                        <p>{requirement.title}</p>
                                     </ListItemButton>
                                 </ListItem>
                             ))}

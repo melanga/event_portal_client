@@ -26,6 +26,12 @@ body {
   font-weight: 500;
   color:#222831 ;
 }
+
+.navbarUserButtons{
+  font-weight: 500;
+  color:#fff ;
+}
+
 .navbarButtons:hover{
   font-weight: 600;
 }
@@ -33,6 +39,8 @@ body {
 .navbarLoginButton:hover{
   color:#222831 ;
 }
+
+
 
 .bottomContent-buttons{
   font-weight: 300;
@@ -75,7 +83,7 @@ body {
   font-size: .8em;
 }
 
-/* SERVICE CARD STYLES */
+/* SERVICE CARD STYLES---------------------------------------------- */
 .serviceCardTitle{
   font-size: 1.75em;
   font-weight: 400;
@@ -83,4 +91,197 @@ body {
 .serviceCardCategory{
   font-size: 1.25em;
   font-weight: 700;
+}
+
+/*
+USER DASHBOARD---------------------------------------------------------------- */
+
+/* .userDashboardEventContainer{
+  align-items: center;
+  justify-content: center;
+  height: 'auto';
+} */
+.userDashboardTitle{
+  font-size: 1.25em;
+  font-weight: 400;
+  color: #fff;
+}
+.searchUserBar .MuiOutlinedInput-root{
+  border-radius: 100px;
+  background-color:#fff;
+}
+.userSearchButton{
+  font-weight: 300;
+  font-size: 1rem;
+  margin: 0;
+}
+
+.userEventListName{
+  font-weight: 300;
+  font-size: 1rem;
+  margin: 0;
+  color: #fff;
+}
+
+.userCreateEventButton{
+  font-weight: 500;
+  font-size: 0.8rem;
+  margin: 0;
+  color: #fff;
+}
+
+.userFeedTitle{
+  font-weight: 500;
+  font-size: 1.25rem;
+  margin: 0;
+  padding: 20px;
+  text-align: center;
+  color: #222831
+}
+.userEventSubheading{
+  font-weight: 300;
+  font-size: 0.8rem;
+  margin: 0;
+  color: #fff;
+  padding-top: 20px;
+}
+.userEventCloseIcon{
+  display: block;
+  align-items: flex-end;
+  margin-left: auto;
+}
+/* .userFab{
+  margin: 0px;
+  top: auto;
+  right: 20px;
+  bottom: 20px;
+  left: auto;
+  position: fixed;
+} */
+
+/* EVENT BIDCARD------------------------------------------------------------------ */
+
+.eventBidCardCategory{
+  font-size: 1.25em;
+  font-weight: 500;
+  margin: 0;
+
+}
+
+.eventBidCardName{
+  font-size: 1.75em;
+  font-weight: 400;
+  margin: 0;
+}
+
+.eventBidCardLocation{
+  font-size: 1.25em;
+  font-weight: 400;
+  margin:0;
+}
+
+.eventBidCardDescription{
+  font-size: 1em;
+  font-weight: 400;
+  margin: 0;
+}
+.eventCardButton{
+  color:#1A2027;
+  font-weight: 500;
+}
+
+/* FILTERS------------------------------------- */
+.filters{
+  justify-content: center;
+}
+
+.filtersTitle{
+  font-size: 1.5em;
+  font-weight: 400;
+}
+.filterButtonTitle{
+  font-size: 1.5em;
+  font-weight: 400;
+  color: #1A2027;
+}
+
+.filterButtonContent{
+  margin: 0;
+  color: #1A2027;
+  font-weight: 600;
+}
+.filterButton{
+  background-color: #00ADB5;
+  margin: 0;
+
+}
+
+/* SERVICE PROVIDER DATA DISPLAY----------------------------------------- */
+
+.SPMainContainer{
+  align-items: center;
+  justify-content: center;
+
+}
+.SPDisplayContainer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f5f5f5;
+  height: 100%;
+}
+
+.SPDisplayContent{
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px;
+}
+
+.SPDisplayTitle{
+  font-size: 1.75em;
+  font-weight: 650;
+  color: #fff;
+  background-color: #00ADB5;
+  border-radius: 100px;
+  height: 100%;
+  padding: 10px;
+}
+
+.SPDisplayContent{
+  background-color: #fff;
+  padding: 20px;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+}
+
+.SDPDIsplayDescription{
+  color: #1A2027;
+  font-size: 1em;
+  font-weight: 400;
+  padding: 30px;
+}
+.SDPDIsplayGallery{
+  color: #1A2027;
+  font-size: 1.25em;
+  font-weight: 600;
+}
+.SPDisplayButtons{
+  color: #1A2027;
+  font-weight: 500;
+  font-size: 1rem;
+}
+.SPDisplayHomeButton{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
+
+}
+
+.SPDisplayHomeButton h3{
+  color: #1A2027;
+  font-weight: 400;
+  font-size: 1.5rem;
 }
