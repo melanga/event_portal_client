@@ -4,11 +4,11 @@ import { Layout } from './components/Layout';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import RequireAuth from './components/RequireAuth';
-import CustomerDashboard from './pages/dashboard/customerDashboard';
 import PublicRoutes from './routes/PublicRoutes';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { getUser } from './api/reducers/authSlice';
+import { Dashboard } from './pages/Dashboard';
 
 function App() {
     const { user, token } = useSelector((state) => state.auth);
@@ -35,7 +35,7 @@ function App() {
                             >
                                 <Route
                                     path="dashboard"
-                                    element={<CustomerDashboard />}
+                                    element={<Dashboard />}
                                 />
                             </Route>
                         </Route>

@@ -22,7 +22,7 @@ const drawerWidth = 240;
 const navItems = [
     { name: 'Home', path: '/' },
     { name: 'Services', path: '/search' },
-    { name: 'About', path: '/about' },
+    { name: 'Events', path: '/dashboard' },
     { name: 'Contact', path: '/contact' },
 ];
 // const navItems = ['Home', 'Services', 'About', 'Contact'];

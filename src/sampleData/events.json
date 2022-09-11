@@ -1,0 +1,13 @@
+[
+    {"id":1, "eventName":"Birthday Party", "eventDate":"2021-10-10", "eventTime":"10:00"},
+    {"id":2, "eventName":"Wedding", "eventDate":"2021-10-10", "eventTime":"10:00"},
+    {"id":3, "eventName":"Anniversary", "eventDate":"2021-10-10", "eventTime":"10:00"},
+    {"id":4, "eventName":"Graduation", "eventDate":"2021-10-10", "eventTime":"10:00"},
+    {"id":6, "eventName":"Christmas Party", "eventDate":"2021-10-10", "eventTime":"10:00"},
+    {"id":7, "eventName":"New Year Party", "eventDate":"2021-10-10", "eventTime":"10:00"},
+    {"id":8, "eventName":"Halloween Party", "eventDate":"2021-10-10", "eventTime":"10:00"},
+    {"id":9, "eventName":"Thanksgiving Party", "eventDate":"2021-10-10", "eventTime":"10:00"},
+    {"id":10, "eventName":"Valentine Party", "eventDate":"2021-10-10", "eventTime":"10:00"},
+    {"id":11, "eventName":"Easter Party", "eventDate":"2021-10-10", "eventTime":"10:00"},
+    {"id":13, "eventName":"Independence Day Party", "eventDate":"2021-10-10", "eventTime":"10:00"}
+  ]
