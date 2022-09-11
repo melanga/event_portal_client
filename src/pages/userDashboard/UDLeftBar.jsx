@@ -1,15 +1,28 @@
 import * as React from 'react';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
-import { Box, Divider, TextField } from '@mui/material';
+import { Box, Divider, ListItemIcon, TextField } from '@mui/material';
 import ListItem from '@mui/material/ListItem';
 import ClearIcon from '@mui/icons-material/Clear';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getEvents, setEvent } from '../../api/reducers/eventSlice';
+import {
+    deleteEvent,
+    getEvents,
+    reset,
+    setEvent,
+} from '../../api/reducers/eventSlice';
 import CreateEventDialog from './CreateEventDialog';
+import { toast } from 'react-toastify';
+import ConfirmDialogBox from '../../components/ConfirmDialogBox';
 
 const UDLeftBar = () => {
+    const [confirmDialog, setConfirmDialog] = useState({
+        open: false,
+        title: '',
+        subTitle: '',
+        onConfirm: () => {},
+    });
     const dispatch = useDispatch();
     const { event, events } = useSelector((state) => state.event);
     const { user } = useSelector((state) => state.auth);
@@ -17,6 +30,15 @@ const UDLeftBar = () => {
     useEffect(() => {
         dispatch(getEvents(user.id));
     }, [dispatch, user.id]);
+
+    // handle event delete
+    const handleDelete = (id) => {
+        dispatch(deleteEvent(id)).then(() => {
+            toast.success('Event Deleted Successfully');
+            dispatch(reset());
+            dispatch(getEvents(user.id));
+        });
+    };
 
     //SEARCH FILTER-----------------------------------
     const [searchFilter, setSearchFilter] = useState('');
@@ -100,24 +122,40 @@ const UDLeftBar = () => {
                                             {eachEvent.name}
                                         </p>
                                     </ListItemButton>
-                                    <ListItemButton
-                                        sx={{ alignItems: 'flex-end' }}
+                                    <ListItemIcon
+                                        sx={{
+                                            alignItems: 'flex-end',
+                                        }}
                                     >
                                         <div className="userEventCloseIcon">
-                                            <ClearIcon color="error" />
+                                            <ClearIcon
+                                                // onClick={() => {
+                                                //     handleDelete(eachEvent.id);
+                                                // }}
+                                                onClick={() => {
+                                                    setConfirmDialog({
+                                                        open: true,
+                                                        title: `Are you sure to delete this event "${eachEvent.name}"?`,
+                                                        subTitle:
+                                                            "You can't undo this operation",
+                                                        onConfirm: () => {
+                                                            handleDelete(
+                                                                eachEvent.id
+                                                            );
+                                                        },
+                                                    });
+                                                }}
+                                                color="error"
+                                            />
                                         </div>
-                                    </ListItemButton>
+                                    </ListItemIcon>
                                 </ListItem>
                             ))}
                     </List>
-                </Box>
-                <Box display="flex" justifyContent="flex-end">
-                    <Divider
-                        color="white"
-                        variant="middle"
-                        sx={{ marginTop: 3 }}
+                    <ConfirmDialogBox
+                        data={confirmDialog}
+                        setConfirmDialog={setConfirmDialog}
                     />
-                    {/* CREATE NEW EVENT BUTTON---------------------------------------------------- */}
                     <CreateEventDialog />
                 </Box>
             </Box>
