@@ -23,6 +23,7 @@ const formInitialState = {
 
 export default function CreateRequirementDialog() {
     const [form, setForm] = useState(formInitialState);
+
     const [open, setOpen] = useState(false);
 
     const dispatch = useDispatch();

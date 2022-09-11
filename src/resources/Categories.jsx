@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCategories } from '../api/reducers/serviceProviderSlice';
 
-const Categories = ({ handleChange }) => {
+const Categories = ({ handleChange, value }) => {
     const { categories } = useSelector((state) => state.service_provider);
     const dispatch = useDispatch();
 
@@ -13,11 +13,20 @@ const Categories = ({ handleChange }) => {
 
     return (
         <Autocomplete
+            value={value}
             options={categories}
-            getOptionLabel={(option) => option.name}
+            getOptionLabel={(option) => {
+                if (typeof option === 'string' && !option.name) {
+                    return option;
+                } else {
+                    return option.name;
+                }
+            }}
             id="category"
             clearOnEscape
-            isOptionEqualToValue={(option, value) => option.name === value.name}
+            isOptionEqualToValue={(option, value) =>
+                option.title === value.name
+            }
             onChange={(event, value) => {
                 const values = {
                     target: {

@@ -8,7 +8,7 @@ import PublicRoutes from './routes/PublicRoutes';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { getUser } from './api/reducers/authSlice';
-import UserDashboard from './pages/userDashboard/UserDashboard';
+import { Dashboard } from './pages/Dashboard';
 
 function App() {
     const { user, token } = useSelector((state) => state.auth);
@@ -35,7 +35,7 @@ function App() {
                             >
                                 <Route
                                     path="dashboard"
-                                    element={<UserDashboard />}
+                                    element={<Dashboard />}
                                 />
                             </Route>
                         </Route>

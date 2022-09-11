@@ -4,6 +4,7 @@ import { axiosErrorFormatter } from '../../utils/axiosErrorFormatter';
 
 const initialState = {
     user: null,
+    role: null,
     isSuccess: false,
     isLoading: false,
     isError: false,
@@ -101,6 +102,9 @@ export const authSlice = createSlice({
             .addCase(getUser.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.isSuccess = true;
+                state.role = action.payload.data.service_title
+                    ? 'service_provider'
+                    : 'customer';
                 state.user = action.payload.data;
             })
             .addCase(getUser.rejected, (state, action) => {

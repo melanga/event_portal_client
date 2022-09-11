@@ -10,8 +10,17 @@ import {
 } from '../../api/reducers/requirementSlice';
 import { toast } from 'react-toastify';
 import CreateRequirementDialog from './CreateRequirementDialog';
+import RequirementDialog from './RequirementDialog';
 
 const UDRightBar = () => {
+    const [requirementDialog, setRequirementDialog] = useState({
+        open: false,
+        id: null,
+        title: '',
+        description: '',
+        category: '',
+        onConfirm: () => {},
+    });
     const { event } = useSelector((state) => state.event);
     const { requirements, isError, message } = useSelector(
         (state) => state.requirement
@@ -97,6 +106,18 @@ const UDRightBar = () => {
                                         sx={{ paddingY: 1 }}
                                     >
                                         <ListItemButton
+                                            onClick={() => {
+                                                setRequirementDialog({
+                                                    open: true,
+                                                    id: requirement.id,
+                                                    title: requirement.title,
+                                                    description:
+                                                        requirement.description,
+                                                    category:
+                                                        requirement.category,
+                                                    onConfirm: () => {},
+                                                });
+                                            }}
                                             sx={{
                                                 borderRadius: '15px',
                                                 '&:hover': {
@@ -132,6 +153,10 @@ const UDRightBar = () => {
                         </p>
                     )}
                 </Box>
+                <RequirementDialog
+                    data={requirementDialog}
+                    setRequirementDialog={setRequirementDialog}
+                />
                 <CreateRequirementDialog />
             </Box>
 
