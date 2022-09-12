@@ -7,10 +7,15 @@ import { CardActionArea, Stack, Box } from '@mui/material';
 import StarIcon from '@mui/icons-material/Star';
 import { yellow } from '@mui/material/colors';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
+import { useNavigate } from 'react-router-dom';
 
 export default function ActionAreaCard({ service_provider }) {
+    // get useNavigate from react-router-dom
+    const navigate = useNavigate();
+
     return (
         <Card
+            onClick={() => navigate(`/service_provider/${service_provider.id}`)}
             elevation={0}
             sx={{
                 maxWidth: 345,

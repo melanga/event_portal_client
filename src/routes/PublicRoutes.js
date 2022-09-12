@@ -5,6 +5,7 @@ import Register from '../pages/auth/Register';
 import { Layout } from '../components/Layout';
 import RegisterPage from '../pages/auth/Register/RegisterPage';
 import SearchPage from '../pages/search';
+import ServiceProviderPage from '../pages/serviceProvider/ServiceProviderPage';
 
 const PublicRoutes = [
     <Route key={'/'} path="/" element={<LandingPage />} />,
@@ -18,6 +19,11 @@ const PublicRoutes = [
         />
     </Route>,
     <Route key={'search page'} path={'search'} element={<SearchPage />} />,
+    <Route
+        key={'service Provider'}
+        path={'service_provider/:id'}
+        element={<ServiceProviderPage />}
+    />,
 ];
 
 export default PublicRoutes;

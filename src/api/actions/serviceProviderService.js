@@ -13,6 +13,13 @@ const getServiceProviderEvents = async (user_id) => {
     return response.data;
 };
 
+const getServiceProvider = async (user_id) => {
+    const response = await axios.get(
+        `http://localhost:3000/api/v1/service_providers/${user_id}`
+    );
+    return response.data;
+};
+
 const getServiceProviderBids = async (data) => {
     const config = {
         headers: {
@@ -101,4 +108,5 @@ export const serviceProviderService = {
     getServiceProviderBids,
     createServiceProviderBid,
     getServiceProviderBid,
+    getServiceProvider,
 };
