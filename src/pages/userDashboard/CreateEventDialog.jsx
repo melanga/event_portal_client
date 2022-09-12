@@ -85,7 +85,7 @@ export default function CreateEventDialog() {
                 <DialogTitle>Create an Event</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Create and plan your dream event here.
+                        Create and plan your dream eventBidData here.
                     </DialogContentText>
                     <TextField
                         required={true}

@@ -52,7 +52,7 @@ const UDLeftBar = () => {
                 p={2}
                 // sx={{display:{xs:"none",md:"block"}}}
             >
-                <h3 className="userDashboardTitle">My Events</h3>
+                <h3 className="userDashboardTitle">My Options</h3>
                 <Divider variant="middle" color="white" />
                 <Box
                     sx={{
@@ -67,7 +67,7 @@ const UDLeftBar = () => {
                         onChange={(e) => setSearchFilter(e.target.value)}
                         className="searchUserBar"
                         fullWidth={true}
-                        placeholder="Search Your Events Here"
+                        placeholder="Search Your Options Here"
                         id="searchEvent"
                         sx={{
                             borderRadius: '50px',
@@ -79,7 +79,7 @@ const UDLeftBar = () => {
                 {/* DIVIDER---------------------------------------------------- */}
                 <Divider variant="middle" color="white" />
 
-                <p className="userEventSubheading">Events You have created</p>
+                <p className="userEventSubheading">Options You have created</p>
                 <Box mt={3} style={{ maxHeight: '30vh', overflow: 'auto' }}>
                     {/* USER EVENT LIST---------------------------------------------------- */}
                     <List>

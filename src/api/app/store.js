@@ -5,6 +5,7 @@ import dashboardReducer from '../reducers/dashboardSlice';
 import eventReducer from '../reducers/eventSlice';
 import serviceProviderReducer from '../reducers/serviceProviderSlice';
 import requirementReducer from '../reducers/requirementSlice';
+import serviceProviderDashboardReducer from '../reducers/serviceProvicerDashboardSlice';
 
 export const store = configureStore({
     reducer: {
@@ -13,5 +14,6 @@ export const store = configureStore({
         event: eventReducer,
         service_provider: serviceProviderReducer,
         requirement: requirementReducer,
+        service_provider_dashboard: serviceProviderDashboardReducer,
     },
 });

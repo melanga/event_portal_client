@@ -30,7 +30,12 @@ function App() {
                             {PublicRoutes}
                             <Route
                                 element={
-                                    <RequireAuth allowedRoles={['customer']} />
+                                    <RequireAuth
+                                        allowedRoles={[
+                                            'customer',
+                                            'service_provider',
+                                        ]}
+                                    />
                                 }
                             >
                                 <Route

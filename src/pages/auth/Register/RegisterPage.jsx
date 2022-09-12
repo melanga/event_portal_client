@@ -14,6 +14,7 @@ import { register, reset } from '../../../api/reducers/authSlice';
 import _ from 'lodash';
 import { toast } from 'react-toastify';
 import LocalLocations from '../../../resources/LocalLocations';
+import Categories from '../../../resources/Categories';
 
 const form_initial_c = {
     first_name: '',
@@ -228,17 +229,7 @@ export default function RegisterPage({ isCustomer }) {
                             mb={2}
                         />
                         {!isCustomer && (
-                            <TextField
-                                onChange={handleChange}
-                                fullWidth
-                                name={'category'}
-                                label="Category"
-                                variant="outlined"
-                                margin="dense"
-                                error={formErrors.category}
-                                required
-                                mb={2}
-                            />
+                            <Categories handleChange={handleChange} />
                         )}
                         <LocalLocations handleChange={handleChange} />
                         {/*<LocalLocations handleChange={handleChange} />*/}

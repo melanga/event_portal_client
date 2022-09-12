@@ -17,18 +17,42 @@ import logo from '../images/logo.png';
 import PersonIcon from '@mui/icons-material/Person';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../api/reducers/authSlice';
+import { useEffect } from 'react';
 
 const drawerWidth = 240;
 const navItems = [
     { name: 'Home', path: '/' },
     { name: 'Services', path: '/search' },
-    { name: 'Events', path: '/dashboard' },
+    { name: 'About', path: '/about' },
     { name: 'Contact', path: '/contact' },
 ];
-// const navItems = ['Home', 'Services', 'About', 'Contact'];
 
 function NavBar(props) {
     const { window } = props;
+    const { role } = useSelector((state) => state.auth);
+    const [navOptions, setNavOptions] = React.useState(navItems);
+
+    useEffect(() => {
+        if (role === 'service_provider') {
+            setNavOptions([
+                { name: 'Home', path: '/' },
+                { name: 'Search', path: '/search' },
+                { name: 'Dashboard', path: '/dashboard' },
+                { name: 'Profile', path: '/profile' },
+                { name: 'Contact', path: '/contact' },
+            ]);
+        } else if (role === 'customer') {
+            setNavOptions([
+                { name: 'Home', path: '/' },
+                { name: 'Services', path: '/search' },
+                { name: 'Events', path: '/dashboard' },
+                { name: 'Contact', path: '/contact' },
+            ]);
+        } else {
+            setNavOptions(navItems);
+        }
+    }, [role]);
+
     const [mobileOpen, setMobileOpen] = React.useState(false);
 
     const handleDrawerToggle = () => {
@@ -47,7 +71,7 @@ function NavBar(props) {
             </Typography>
             <Divider color={'white'} />
             <List>
-                {navItems.map((item) => {
+                {navOptions.map((item) => {
                     return (
                         <ListItem key={item.name} disablePadding>
                             <ListItemButton
@@ -92,7 +116,7 @@ function NavBar(props) {
                     </IconButton>
 
                     <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-                        {navItems.map((item) => (
+                        {navOptions.map((item) => (
                             <Button
                                 component={Link}
                                 to={item.path}

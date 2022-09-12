@@ -23,7 +23,7 @@ const Categories = ({ setCategory }) => {
 
     return (
         <Autocomplete
-            onChange={(event, value) => setCategory(value.title)}
+            onChange={(eventBidData, value) => setCategory(value.title)}
             {...defaultProps}
             {...defaultProps}
             isOptionEqualToValue={(option, value) =>
