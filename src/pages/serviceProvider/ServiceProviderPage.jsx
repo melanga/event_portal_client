@@ -10,17 +10,48 @@ import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import PhoneIcon from '@mui/icons-material/Phone';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getServiceProvider } from '../../api/reducers/serviceProviderSlice';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const SPDisplay = () => {
     const { id } = useParams();
     const { service_provider } = useSelector((state) => state.service_provider);
+    const { event } = useSelector((state) => state.event);
+    const { token } = useSelector((state) => state.auth);
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getServiceProvider(id));
     }, [dispatch, id]);
+
+    const addServiceProviderToEvent = async () => {
+        if (event && id) {
+            if (token) {
+                const config = {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                };
+                const response = await axios.put(
+                    `http://localhost:3000/api/v1/events/${event.id}/service_providers/${id}`,
+                    {},
+                    config
+                );
+                // show error message if any
+                if (response.data.error) {
+                    console.log(response.data.error);
+                } else {
+                    toast.success(`Service Provider added to ${event.name}`);
+                }
+                console.log(response);
+            } else {
+                navigate('/login');
+            }
+        }
+    };
 
     const ImageData = [
         {
@@ -91,7 +122,13 @@ const SPDisplay = () => {
                 <Grid item sm={12} md={8} className="SPDisplayContent">
                     <h1 className="SPDisplayTitle">
                         {service_provider.service_title}
-                        <IconButton aria-label="contact" sx={{ color: '#fff' }}>
+                        <IconButton
+                            onClick={() => {
+                                addServiceProviderToEvent();
+                            }}
+                            aria-label="contact"
+                            sx={{ color: '#fff' }}
+                        >
                             <QuestionAnswerIcon color="inherit" />
                         </IconButton>
                     </h1>
