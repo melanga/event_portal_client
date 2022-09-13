@@ -16,6 +16,7 @@ import {
 } from '../../api/reducers/requirementSlice';
 import { Box, ListItem, ListItemButton } from '@mui/material';
 import List from '@mui/material/List';
+import { useNavigate } from 'react-router-dom';
 
 const formInitialState = {
     title: '',
@@ -26,7 +27,7 @@ const formInitialState = {
 export default function RequirementDialog({ data, setRequirementDialog }) {
     const [form, setForm] = useState(formInitialState);
     const { bids } = useSelector((state) => state.requirement);
-
+    const navigate = useNavigate();
     useEffect(() => {
         setForm({
             title: data.title,
@@ -113,7 +114,11 @@ export default function RequirementDialog({ data, setRequirementDialog }) {
                                 sx={{ paddingY: 1 }}
                             >
                                 <ListItemButton
-                                    onClick={() => {}}
+                                    onClick={() => {
+                                        navigate(
+                                            `/service_provider/${bid.service_provider_id}`
+                                        );
+                                    }}
                                     sx={{
                                         borderRadius: '15px',
                                         '&:hover': {

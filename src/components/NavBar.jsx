@@ -29,7 +29,7 @@ const navItems = [
 
 function NavBar(props) {
     const { window } = props;
-    const { role } = useSelector((state) => state.auth);
+    const { user, role } = useSelector((state) => state.auth);
     const [navOptions, setNavOptions] = React.useState(navItems);
 
     useEffect(() => {
@@ -38,7 +38,7 @@ function NavBar(props) {
                 { name: 'Home', path: '/' },
                 { name: 'Search', path: '/search' },
                 { name: 'Dashboard', path: '/dashboard' },
-                { name: 'Profile', path: '/profile' },
+                { name: 'Profile', path: `/service_provider/${user.id}` },
                 { name: 'Contact', path: '/contact' },
             ]);
         } else if (role === 'customer') {
@@ -51,14 +51,13 @@ function NavBar(props) {
         } else {
             setNavOptions(navItems);
         }
-    }, [role]);
+    }, [role, user.id]);
 
     const [mobileOpen, setMobileOpen] = React.useState(false);
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
     };
-    const { user } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
 
     const drawer = (
