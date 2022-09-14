@@ -3,6 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@react-three/drei": "^9.29.1",
+    "@react-three/fiber": "^8.7.3",
+    "@react-three/postprocessing": "^2.6.2",
+    "three": "^0.144.0",
+    "troika-three-text": "^0.46.4",
     "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",
     "@mui/icons-material": "^5.8.4",

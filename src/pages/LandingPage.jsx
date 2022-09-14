@@ -1,15 +1,34 @@
 import React from 'react';
-import { Stack, Typography } from '@mui/material';
+import ThreeJSscene from './LandingPage/SceneContent';
+import { Box } from '@mui/material';
+import TopLogo from '../images/logo.png';
 
 const LandingPage = () => {
     return (
-        <div>
-            <Stack mt={20} ml={15}>
-                <Typography variant="h3" fontStyle={'italic'}>
-                    Landing Page
-                </Typography>
-            </Stack>
-        </div>
+        <Box
+            sx={{
+                height: '100vh',
+                width: '100vw',
+            }}
+        >
+            <div className="landingTitle-container">
+                <img
+                    src={TopLogo}
+                    alt="EventPortal"
+                    style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        position: 'absolute',
+                        height: '10%',
+                        paddingTop: '15%',
+                    }}
+                />
+            </div>
+            <div className="threeJS-container">
+                <ThreeJSscene />
+            </div>
+        </Box>
     );
 };
 
