@@ -8,6 +8,7 @@ import StarIcon from '@mui/icons-material/Star';
 import { yellow } from '@mui/material/colors';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { useNavigate } from 'react-router-dom';
+import { ImageData } from '../../sampleData/ImageData';
 
 export default function ActionAreaCard({ service_provider }) {
     // get useNavigate from react-router-dom
@@ -32,8 +33,8 @@ export default function ActionAreaCard({ service_provider }) {
                 <CardMedia
                     component="img"
                     height="200vh"
-                    image="https://images.pexels.com/photos/931796/pexels-photo-931796.jpeg?cs=srgb&dl=pexels-nghia-trinh-931796.jpg&fm=jpg"
-                    alt="Vision Photography"
+                    image={ImageData[service_provider.id][0].img}
+                    alt={ImageData[service_provider.id][0].title}
                 />
                 <CardContent>
                     <Stack

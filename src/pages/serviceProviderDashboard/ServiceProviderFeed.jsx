@@ -5,6 +5,7 @@ import { getServiceProviderEvents } from '../../api/reducers/serviceProvicerDash
 import { useDispatch, useSelector } from 'react-redux';
 import EventBidCard from './EventBidCard';
 import { BidFormDialog } from './BidFormDialog';
+import { BudgetFormDialog } from './BudgetFormDialog';
 
 const ServiceProviderFeed = () => {
     const { user } = useSelector((state) => state.auth);
@@ -26,6 +27,12 @@ const ServiceProviderFeed = () => {
         price: 0,
     });
 
+    const [budgetForm, setBudgetForm] = React.useState({
+        open: false,
+        sp_id: user.id,
+        event: {},
+        price: 0,
+    });
     return (
         <Box flex={12} p={3} backgroundColor="#fff">
             <h3 className="userFeedTitle">Your Customer Events</h3>
@@ -54,6 +61,8 @@ const ServiceProviderFeed = () => {
                                         <EventCard
                                             key={event.event_id}
                                             event={event}
+                                            budgetForm={budgetForm}
+                                            setBudgetForm={setBudgetForm}
                                             user={user}
                                         />
                                     );
@@ -67,6 +76,10 @@ const ServiceProviderFeed = () => {
                 </Grid>
             </Box>
             <BidFormDialog bidForm={bidForm} setBidForm={setBidForm} />
+            <BudgetFormDialog
+                budgetForm={budgetForm}
+                setBudgetForm={setBudgetForm}
+            />
         </Box>
     );
 };

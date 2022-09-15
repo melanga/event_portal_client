@@ -13,6 +13,7 @@ import {
     getServiceProviderBids,
     getServiceProviderEvents,
 } from '../../api/reducers/serviceProvicerDashboardSlice';
+import { Link } from 'react-router-dom';
 
 export default function NestedList() {
     const { user } = useSelector((state) => state.auth);
@@ -57,7 +58,6 @@ export default function NestedList() {
                     mb={2}
                     backgroundColor="#30353D"
                 ></Box>
-
                 <p className="userEventSubheading">Events You have Bidded</p>
                 <Box mt={3} style={{ maxHeight: '30vh', overflow: 'auto' }}>
                     {/* USER Option LIST---------------------------------------------------- */}
@@ -86,6 +86,7 @@ export default function NestedList() {
                     {/* CREATE NEW EVENT BUTTON---------------------------------------------------- */}
                     <Button
                         fullWidth={true}
+                        component={Link}
                         variant="contained"
                         size="medium"
                         sx={{
@@ -102,7 +103,7 @@ export default function NestedList() {
                             },
                         }}
                         textDecoration="none"
-                        href="/ServiceProviderDetails"
+                        to={`/service_provider/${user.id}/update`}
                         endIcon={<UpdateIcon color="inherit" />}
                     >
                         <h3 className="userCreateEventButton">

@@ -15,9 +15,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getServiceProvider } from '../../api/reducers/serviceProviderSlice';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { ImageUpload } from './ImageUpload';
 import { ImageData } from '../../sampleData/ImageData';
 
-const SPDisplay = () => {
+const UpdateServiceProvider = () => {
     const { id } = useParams();
     const { service_provider } = useSelector((state) => state.service_provider);
     const { event } = useSelector((state) => state.event);
@@ -28,45 +29,18 @@ const SPDisplay = () => {
         dispatch(getServiceProvider(id));
     }, [dispatch, id]);
 
-    const addServiceProviderToEvent = async () => {
-        if (event && id) {
-            if (token) {
-                const config = {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                };
-                const response = await axios.put(
-                    `http://localhost:3000/api/v1/events/${event.id}/service_providers/${id}`,
-                    {},
-                    config
-                );
-                // show error message if any
-                if (response.data.error) {
-                    console.log(response.data.error);
-                } else {
-                    toast.success(`Service Provider added to ${event.name}`);
-                }
-                console.log(response);
-            } else {
-                navigate('/login');
-            }
-        }
+    const updateServiceProvider = async () => {
+        console.log('update service provider');
     };
 
     return (
         <Box sx={{ backgroundColor: '#f5f5f5' }} className="SPMainContainer">
             <Grid container mt={3} mb={3} className="SPDisplayContainer">
                 <Grid item sm={12} md={8} className="SPDisplayContent">
+                    <p className="SDPDIsplayGallery">Edit info</p>
                     <h1 className="SPDisplayTitle">
                         {service_provider.service_title}
-                        <IconButton
-                            onClick={() => {
-                                addServiceProviderToEvent();
-                            }}
-                            aria-label="contact"
-                            sx={{ color: '#fff' }}
-                        >
+                        <IconButton aria-label="contact" sx={{ color: '#fff' }}>
                             <QuestionAnswerIcon color="inherit" />
                         </IconButton>
                     </h1>
@@ -174,9 +148,10 @@ const SPDisplay = () => {
                     </Button>
                 </Grid>
             </Grid>
+            <ImageUpload />
             <Footer />
         </Box>
     );
 };
 
-export default SPDisplay;
+export default UpdateServiceProvider;

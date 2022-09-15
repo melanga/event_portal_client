@@ -123,7 +123,7 @@ export default function ServiceProviderCard({ service_provider }) {
                                         : '#f44336',
                                     color: 'white',
                                 }}
-                                label={'event.SPBudget'}
+                                label={service_provider.budget}
                                 icon={<ShoppingCartIcon />}
                             ></Chip>
                             <Chip

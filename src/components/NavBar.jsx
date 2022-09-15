@@ -33,7 +33,7 @@ function NavBar(props) {
     const [navOptions, setNavOptions] = React.useState(navItems);
 
     useEffect(() => {
-        if (role === 'service_provider') {
+        if (role === 'service_provider' && user) {
             setNavOptions([
                 { name: 'Home', path: '/' },
                 { name: 'Search', path: '/search' },
@@ -51,7 +51,7 @@ function NavBar(props) {
         } else {
             setNavOptions(navItems);
         }
-    }, [role, user.id]);
+    }, [role, user]);
 
     const [mobileOpen, setMobileOpen] = React.useState(false);
 

@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { getUser } from './api/reducers/authSlice';
 import { Dashboard } from './pages/Dashboard';
+import UpdateServiceProviderPage from './pages/serviceProvider/UpdateServiceProviderPage';
 
 function App() {
     const { user, token } = useSelector((state) => state.auth);
@@ -41,6 +42,18 @@ function App() {
                                 <Route
                                     path="dashboard"
                                     element={<Dashboard />}
+                                />
+                            </Route>
+                            <Route
+                                element={
+                                    <RequireAuth
+                                        allowedRoles={['service_provider']}
+                                    />
+                                }
+                            >
+                                <Route
+                                    path="service_provider/:id/update"
+                                    element={<UpdateServiceProviderPage />}
                                 />
                             </Route>
                         </Route>
