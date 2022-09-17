@@ -116,7 +116,7 @@ export default function RequirementDialog({ data, setRequirementDialog }) {
                                 <ListItemButton
                                     onClick={() => {
                                         navigate(
-                                            `/service_provider/${bid.service_provider_id}`
+                                            `/service_provider/${bid.service_provider_id}/${bid.price}`
                                         );
                                     }}
                                     sx={{

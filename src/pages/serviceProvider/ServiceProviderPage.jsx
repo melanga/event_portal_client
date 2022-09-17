@@ -3,7 +3,6 @@ import { Button, Divider, Grid, Box } from '@mui/material';
 import Footer from '../../components/Footer';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
-import ImageListItemBar from '@mui/material/ImageListItemBar';
 import ListSubheader from '@mui/material/ListSubheader';
 import IconButton from '@mui/material/IconButton';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
@@ -18,7 +17,8 @@ import { toast } from 'react-toastify';
 import { ImageData } from '../../sampleData/ImageData';
 
 const SPDisplay = () => {
-    const { id } = useParams();
+    const { id, price } = useParams();
+    console.log(id, price);
     const { service_provider } = useSelector((state) => state.service_provider);
     const { event } = useSelector((state) => state.event);
     const { token } = useSelector((state) => state.auth);
@@ -36,18 +36,21 @@ const SPDisplay = () => {
                         Authorization: `Bearer ${token}`,
                     },
                 };
-                const response = await axios.put(
-                    `http://localhost:3000/api/v1/events/${event.id}/service_providers/${id}`,
-                    {},
-                    config
-                );
-                // show error message if any
-                if (response.data.error) {
-                    console.log(response.data.error);
-                } else {
-                    toast.success(`Service Provider added to ${event.name}`);
-                }
-                console.log(response);
+                const response = await axios
+                    .put(
+                        `http://localhost:3000/api/v1/events/${event.id}/service_providers/${id}`,
+                        {
+                            price: price ? price : 0,
+                        },
+                        config
+                    )
+                    .then(() => {
+                        toast.success('Service Provider Added to Event');
+                        navigate('/dashboard');
+                    })
+                    .catch(() => {
+                        toast.error('service provider is already added');
+                    });
             } else {
                 navigate('/login');
             }
@@ -61,9 +64,7 @@ const SPDisplay = () => {
                     <h1 className="SPDisplayTitle">
                         {service_provider.service_title}
                         <IconButton
-                            onClick={() => {
-                                addServiceProviderToEvent();
-                            }}
+                            onClick={addServiceProviderToEvent}
                             aria-label="contact"
                             sx={{ color: '#fff' }}
                         >

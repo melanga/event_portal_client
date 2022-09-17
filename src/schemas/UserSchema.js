@@ -6,7 +6,7 @@ const User = Joi.object().keys({
     last_name: Joi.string().required(),
     email: Joi.string().email().min(8).required(),
     password: Joi.string().required(),
-    telephone_number: Joi.string().min(10),
+    telephone_number: Joi.string().min(10).max(10),
     location: Joi.string(),
 });
 
@@ -16,4 +16,19 @@ const ServiceProvider = User.keys({
     description: Joi.string().required(),
 });
 
-module.exports = { User, ServiceProvider };
+class Event extends Joi.object {
+    constructor() {
+        super();
+        this.event = this.keys({
+            title: Joi.string().required(),
+            description: Joi.string().required(),
+            location: Joi.string().required(),
+            start_date: Joi.date().required(),
+            end_date: Joi.date().required(),
+            price: Joi.number().required(),
+            service_provider_id: Joi.number().required(),
+        });
+    }
+}
+
+module.exports = { User, ServiceProvider, Event };

@@ -23,8 +23,6 @@ const drawerWidth = 240;
 const navItems = [
     { name: 'Home', path: '/' },
     { name: 'Services', path: '/search' },
-    { name: 'About', path: '/about' },
-    { name: 'Contact', path: '/contact' },
 ];
 
 function NavBar(props) {
@@ -140,7 +138,7 @@ function NavBar(props) {
                                 component={Link}
                                 to="/login"
                                 sx={{ color: '#fff', borderRadius: '50px' }}
-                                variant="contained"
+                                variant="text"
                                 ml={1}
                                 startIcon={<PersonIcon />}
                             >

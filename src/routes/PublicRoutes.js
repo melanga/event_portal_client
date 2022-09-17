@@ -24,6 +24,11 @@ const PublicRoutes = [
         path={'service_provider/:id'}
         element={<ServiceProviderPage />}
     />,
+    <Route
+        key={'service Provider'}
+        path={'service_provider/:id/:price'}
+        element={<ServiceProviderPage />}
+    />,
 ];
 
 export default PublicRoutes;

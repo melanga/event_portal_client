@@ -25,7 +25,7 @@ export default function ServiceProviderCard({ service_provider }) {
         if (service_provider.c_confirmed && service_provider.sp_confirmed) {
             setServiceConfirmed(true);
         }
-    }, [service_provider.c_confirmed, service_provider.sp_confirmed]);
+    }, [service_provider]);
 
     const removeServiceProviderFromEvent = () => {
         if (event && service_provider) {
@@ -118,9 +118,11 @@ export default function ServiceProviderCard({ service_provider }) {
                         >
                             <Chip
                                 sx={{
-                                    backgroundColor: service_confirmed
-                                        ? '#4caf50'
-                                        : '#f44336',
+                                    backgroundColor:
+                                        service_provider.c_confirmed &&
+                                        service_provider.sp_confirmed
+                                            ? '#4caf50'
+                                            : '#f44336',
                                     color: 'white',
                                 }}
                                 label={service_provider.budget}
